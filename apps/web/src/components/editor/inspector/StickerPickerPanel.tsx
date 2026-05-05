@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo } from "react";
 import { Smile, Sticker, Search, Plus } from "lucide-react";
-import { Input } from "@openreel/ui";
+import { Input } from "antd";
 import { useProjectStore } from "../../../stores/project-store";
 import {
   stickerLibrary,

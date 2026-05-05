@@ -308,7 +308,6 @@ export const AdjustmentLayerSection: React.FC<AdjustmentLayerSectionProps> = ({
                 </span>
               </div>
               <Slider
-                range={false}
                 min={0}
                 max={100}
                 step={1}

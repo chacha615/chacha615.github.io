@@ -12,13 +12,14 @@ import {
   ChevronDown,
 } from "lucide-react";
 import type { PhotoBlendMode, PhotoLayer } from "@openreel/core";
-import {
-  LabeledSlider as Slider,
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@openreel/ui";
+// import {
+//   LabeledSlider as Slider,
+//   DropdownMenu,
+//   DropdownMenuTrigger,
+//   DropdownMenuContent,
+//   DropdownMenuItem,
+// } from "@openreel/ui";
+import { Slider,Dropdown } from "antd";
 
 const BLEND_MODES: { value: PhotoBlendMode; label: string }[] = [
   { value: "normal", label: "Normal" },
@@ -47,27 +48,27 @@ const BlendModeSelector: React.FC<{
   return (
     <div className="flex items-center justify-between">
       <span className="text-[10px] text-text-secondary">Blend Mode</span>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button className="flex items-center gap-1 px-2 py-1 text-[10px] bg-background-tertiary border border-border rounded hover:border-primary transition-colors">
+      <Dropdown placement="bottom"
+      className="w-32 max-h-48 overflow-y-auto"
+      menu={{
+        items:BLEND_MODES.map((mode) => ({
+          key: mode.value,
+          label: (
+        <span className={`text-[10px] ${mode.value === value ? "text-primary" : ""}`}>
+          {mode.label}
+        </span>
+      ),
+      onClick: () => onChange(mode.value),
+        }
+          ))
+      }}
+      trigger={['click']}
+      >
+        <button className="flex items-center gap-1 px-2 py-1 text-[10px] bg-background-tertiary border border-border rounded hover:border-primary transition-colors">
             <span className="text-text-primary">{selectedMode.label}</span>
             <ChevronDown size={12} className="text-text-muted" />
           </button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-32 max-h-48 overflow-y-auto">
-          {BLEND_MODES.map((mode) => (
-            <DropdownMenuItem
-              key={mode.value}
-              onClick={() => onChange(mode.value)}
-              className={`text-[10px] ${
-                mode.value === value ? "text-primary bg-background-tertiary" : ""
-              }`}
-            >
-              {mode.label}
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
+      </Dropdown>
     </div>
   );
 };
@@ -314,14 +315,21 @@ export const PhotoLayersSection: React.FC<PhotoLayersSectionProps> = ({
           </span>
 
           {/* Opacity Slider */}
-          <Slider
-            label="Opacity"
-            value={selectedLayer.opacity * 100}
-            onChange={(value) => onSetOpacity(selectedLayer.id, value / 100)}
-            min={0}
-            max={100}
-            unit="%"
-          />
+          <div className="space-y-1 h-1.5">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Opacity</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {Math.round(selectedLayer.opacity * 100)}
+            %
+          </span>
+        </div>
+        <Slider
+          value={selectedLayer.opacity * 100}
+          onChange={(values) => onSetOpacity(selectedLayer.id, values / 100)}
+          min={0}
+          max={100}
+        />
+      </div>
 
           {/* Blend Mode Selector */}
           <BlendModeSelector

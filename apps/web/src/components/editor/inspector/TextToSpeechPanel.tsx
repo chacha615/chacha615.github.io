@@ -240,7 +240,7 @@ export const TextToSpeechPanel: React.FC = () => {
             <label className="text-[10px] font-medium text-text-secondary">Speed</label>
             <span className="text-[10px] text-text-muted">{speed.toFixed(1)}x</span>
           </div>
-          <Slider min={0.5} max={2.0} step={0.1} value={[speed]} onValueChange={(value) => setSpeed(value[0])} />
+          <Slider min={0.5} max={2.0} step={0.1} value={[speed]} onValueChange={(value) => setSpeed(Array.isArray(value) ? value[0] : value)} />
           <div className="flex justify-between text-[8px] text-text-muted">
             <span>0.5x</span>
             <span>1.0x</span>

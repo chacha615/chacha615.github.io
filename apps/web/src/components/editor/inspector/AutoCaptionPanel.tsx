@@ -7,14 +7,7 @@ import type {
   TranscriptionProgress,
   TranscriptionSegment,
 } from "@openreel/core";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@openreel/ui";
-
+import { Select } from "antd";
 const CAPTION_STYLE_PRESETS = [
   {
     id: "default",
@@ -159,40 +152,34 @@ export const AutoCaptionPanel: React.FC = () => {
             <span className="text-[10px] text-text-secondary">Language</span>
           </div>
           <Select
+          className="w-auto min-w-[100px] bg-background-secondary border-border text-text-primary text-[10px]"
             value={selectedLanguage}
-            onValueChange={setSelectedLanguage}
+            onChange={setSelectedLanguage}
             disabled={isTranscribing}
-          >
-            <SelectTrigger className="w-auto min-w-[100px] bg-background-secondary border-border text-text-primary text-[10px]">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="bg-background-secondary border-border">
-              {languages.map((lang) => (
-                <SelectItem key={lang.code} value={lang.code}>
-                  {lang.name}
-                </SelectItem>
+            options={languages.map((lang) => (
+                {
+                  value: lang.code,
+                  label: lang.name,
+                }
               ))}
-            </SelectContent>
+          >
           </Select>
         </div>
 
         <div className="flex items-center justify-between">
           <span className="text-[10px] text-text-secondary">Caption Style</span>
           <Select
+          className="w-auto min-w-[100px] bg-background-secondary border-border text-text-primary text-[10px]"
             value={selectedStyle}
-            onValueChange={setSelectedStyle}
+            onChange={setSelectedStyle}
             disabled={isTranscribing}
-          >
-            <SelectTrigger className="w-auto min-w-[100px] bg-background-secondary border-border text-text-primary text-[10px]">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="bg-background-secondary border-border">
-              {CAPTION_STYLE_PRESETS.map((preset) => (
-                <SelectItem key={preset.id} value={preset.id}>
-                  {preset.name}
-                </SelectItem>
+            options={CAPTION_STYLE_PRESETS.map((preset) => (
+                {
+                  value: preset.id,
+                  label: preset.name,
+                }
               ))}
-            </SelectContent>
+          >
           </Select>
         </div>
       </div>

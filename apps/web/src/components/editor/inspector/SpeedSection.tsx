@@ -3,7 +3,7 @@ import { RotateCcw } from "lucide-react";
 import type { Clip } from "@openreel/core";
 import { getSpeedEngine } from "@openreel/core";
 import { useProjectStore } from "../../../stores/project-store";
-import { Input, Switch, Label } from "@openreel/ui";
+import { Input, Switch } from "antd";
 
 interface SpeedSectionProps {
   clip: Clip;
@@ -175,7 +175,7 @@ export const SpeedSection: React.FC<SpeedSectionProps> = ({ clip }) => {
       </div>
 
       <div className="space-y-2">
-        <Label className="text-xs text-text-tertiary">Custom Speed</Label>
+        <label className="text-xs text-text-tertiary">Custom Speed</label>
         <div className="flex gap-2">
           <Input
             type="number"
@@ -204,13 +204,13 @@ export const SpeedSection: React.FC<SpeedSectionProps> = ({ clip }) => {
 
       {hasAudio() && (
         <div className="flex items-center justify-between p-3 rounded-lg bg-background-tertiary border border-border">
-          <Label htmlFor="affect-audio" className="text-xs text-text-secondary">
+          <label htmlFor="affect-audio" className="text-xs text-text-secondary">
             Apply speed to audio
-          </Label>
+          </label>
           <Switch
             id="affect-audio"
             checked={affectAudio}
-            onCheckedChange={setAffectAudio}
+            onChange={setAffectAudio}
           />
         </div>
       )}

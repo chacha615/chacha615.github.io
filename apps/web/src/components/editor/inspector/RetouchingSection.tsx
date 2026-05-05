@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { Eraser, Copy, Eye, Target, MousePointer2 } from "lucide-react";
-import { LabeledSlider as Slider } from "@openreel/ui";
+import { Slider } from "antd";
 
 export type RetouchingTool = "spotHeal" | "cloneStamp" | "redEyeRemoval";
 
@@ -250,49 +250,73 @@ export const RetouchingSection: React.FC<RetouchingSectionProps> = ({
         <BrushPreview size={brushConfig.size} hardness={brushConfig.hardness} />
 
         {/* Size Slider */}
-        <Slider
-          label="Size"
-          value={brushConfig.size}
-          onChange={onBrushSizeChange}
-          min={1}
-          max={500}
-          step={1}
-          unit="px"
-        />
+         <div className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] text-text-secondary">Size</span>
+                  <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+                    {Math.round(brushConfig.size)}
+                    px
+                  </span>
+                </div>
+                <Slider
+                  value={brushConfig.size}
+                  onChange={(values) => onBrushSizeChange(values)}
+                  min={1}
+                  max={500}
+                />
+              </div>
 
         {/* Hardness Slider */}
-        <Slider
-          label="Hardness"
-          value={brushConfig.hardness * 100}
-          onChange={(value) => onBrushHardnessChange(value / 100)}
-          min={0}
-          max={100}
-          step={1}
-          unit="%"
-        />
+         <div className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] text-text-secondary">Hardness</span>
+                  <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+                    {Math.round(brushConfig.hardness * 100)}
+                    %
+                  </span>
+                </div>
+                <Slider
+                  value={brushConfig.hardness * 100}
+                  onChange={(values) => onBrushHardnessChange(values / 100)}
+                  min={0}
+                  max={100}
+                />
+              </div>
 
         {/* Opacity Slider */}
-        <Slider
-          label="Opacity"
-          value={brushConfig.opacity * 100}
-          onChange={(value) => onBrushOpacityChange(value / 100)}
-          min={0}
-          max={100}
-          step={1}
-          unit="%"
-        />
+         <div className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] text-text-secondary">Opacity</span>
+                  <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+                    {Math.round(brushConfig.opacity * 100)}
+                    %
+                  </span>
+                </div>
+                <Slider
+                  value={brushConfig.opacity * 100}
+                  onChange={(values) => onBrushOpacityChange(values / 100)}
+                  min={0}
+                  max={100}
+                />
+              </div>
 
         {/* Flow Slider (for spot healing and clone stamp) */}
         {(activeTool === "spotHeal" || activeTool === "cloneStamp") && (
-          <Slider
-            label="Flow"
-            value={brushConfig.flow * 100}
-            onChange={(value) => onBrushFlowChange(value / 100)}
-            min={0}
-            max={100}
-            step={1}
-            unit="%"
-          />
+           <div className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] text-text-secondary">Flow</span>
+                  <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+                    {Math.round(brushConfig.flow * 100)}
+                    %
+                  </span>
+                </div>
+                <Slider
+                  value={brushConfig.flow * 100}
+                  onChange={(values) => onBrushFlowChange(values / 100)}
+                  min={0}
+                  max={100}
+                />
+              </div>
         )}
       </div>
 

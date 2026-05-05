@@ -1430,7 +1430,7 @@ export const InspectorPanel: React.FC = () => {
                       <SelectGroup>
                         <SelectLabel className="text-text-muted text-[10px] font-medium">Popular</SelectLabel>
                         {["Inter", "Poppins", "Montserrat", "Roboto", "Open Sans", "Lato", "DM Sans"].map((font) => (
-                          <SelectItem key={font} value={font} style={{ fontFamily: font }}>
+                          <SelectItem key={font} value={font}>
                             {font}
                           </SelectItem>
                         ))}
@@ -1438,7 +1438,7 @@ export const InspectorPanel: React.FC = () => {
                       <SelectGroup>
                         <SelectLabel className="text-text-muted text-[10px] font-medium">Display</SelectLabel>
                         {["Bebas Neue", "Anton", "Oswald", "Teko", "Staatliches", "Alfa Slab One"].map((font) => (
-                          <SelectItem key={font} value={font} style={{ fontFamily: font }}>
+                          <SelectItem key={font} value={font}>
                             {font}
                           </SelectItem>
                         ))}
@@ -1446,7 +1446,7 @@ export const InspectorPanel: React.FC = () => {
                       <SelectGroup>
                         <SelectLabel className="text-text-muted text-[10px] font-medium">Elegant</SelectLabel>
                         {["Playfair Display", "Cinzel", "Lora", "Merriweather", "DM Serif Display"].map((font) => (
-                          <SelectItem key={font} value={font} style={{ fontFamily: font }}>
+                          <SelectItem key={font} value={font}>
                             {font}
                           </SelectItem>
                         ))}
@@ -1454,7 +1454,7 @@ export const InspectorPanel: React.FC = () => {
                       <SelectGroup>
                         <SelectLabel className="text-text-muted text-[10px] font-medium">Handwritten</SelectLabel>
                         {["Pacifico", "Lobster", "Dancing Script", "Caveat", "Permanent Marker"].map((font) => (
-                          <SelectItem key={font} value={font} style={{ fontFamily: font }}>
+                          <SelectItem key={font} value={font}>
                             {font}
                           </SelectItem>
                         ))}

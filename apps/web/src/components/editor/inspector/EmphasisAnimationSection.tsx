@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 import { RotateCcw, Target, Zap, Clock } from "lucide-react";
-import { Slider } from "@openreel/ui";
+import { Slider } from "antd";
 import { useProjectStore } from "../../../stores/project-store";
 import { useEngineStore } from "../../../stores/engine-store";
 import type { EmphasisAnimation, EmphasisAnimationType } from "@openreel/core";
@@ -314,9 +314,9 @@ export const EmphasisAnimationSection: React.FC<
                 min={0.1}
                 max={3}
                 step={0.1}
-                value={[currentAnimation.speed]}
-                onValueChange={(value) =>
-                  handleAnimationChange({ speed: value[0] })
+                value={currentAnimation.speed}
+                onChange={(value) =>
+                  handleAnimationChange({ speed: value })
                 }
               />
             </div>
@@ -334,10 +334,10 @@ export const EmphasisAnimationSection: React.FC<
                 min={0.1}
                 max={2}
                 step={0.1}
-                value={[currentAnimation.intensity]}
-                onValueChange={(value) =>
+                value={currentAnimation.intensity}
+                onChange={(value) =>
                   handleAnimationChange({
-                    intensity: value[0],
+                    intensity: value,
                   })
                 }
               />
@@ -388,10 +388,10 @@ export const EmphasisAnimationSection: React.FC<
                 min={0}
                 max={clipDuration}
                 step={0.1}
-                value={[currentAnimation.startTime ?? 0]}
-                onValueChange={(value) =>
+                value={currentAnimation.startTime ?? 0}
+                onChange={(value) =>
                   handleAnimationChange({
-                    startTime: value[0],
+                    startTime: value,
                   })
                 }
               />
@@ -412,12 +412,12 @@ export const EmphasisAnimationSection: React.FC<
                 min={0}
                 max={clipDuration - (currentAnimation.startTime ?? 0)}
                 step={0.1}
-                value={[
+                value={
                   currentAnimation.animationDuration ??
                   clipDuration - (currentAnimation.startTime ?? 0)
-                ]}
-                onValueChange={(value) => {
-                  const val = value[0];
+                }
+                onChange={(value) => {
+                  const val = value;
                   handleAnimationChange({
                     animationDuration: val > 0 ? val : undefined,
                   });
@@ -465,10 +465,10 @@ export const EmphasisAnimationSection: React.FC<
                   min={1.1}
                   max={3}
                   step={0.1}
-                  value={[currentAnimation.zoomScale || 1.5]}
-                  onValueChange={(value) =>
+                  value={currentAnimation.zoomScale || 1.5}
+                  onChange={(value) =>
                     handleAnimationChange({
-                      zoomScale: value[0],
+                      zoomScale: value,
                     })
                   }
                 />
@@ -487,10 +487,10 @@ export const EmphasisAnimationSection: React.FC<
                   min={0}
                   max={1}
                   step={0.05}
-                  value={[currentAnimation.holdDuration || 0.3]}
-                  onValueChange={(value) =>
+                  value={currentAnimation.holdDuration || 0.3}
+                  onChange={(value) =>
                     handleAnimationChange({
-                      holdDuration: value[0],
+                      holdDuration: value,
                     })
                   }
                 />
@@ -509,11 +509,11 @@ export const EmphasisAnimationSection: React.FC<
                       min={0}
                       max={1}
                       step={0.05}
-                      value={[currentAnimation.focusPoint?.x || 0.5]}
-                      onValueChange={(value) =>
+                      value={currentAnimation.focusPoint?.x || 0.5}
+                      onChange={(value) =>
                         handleAnimationChange({
                           focusPoint: {
-                            x: value[0],
+                            x: value,
                             y: currentAnimation.focusPoint?.y || 0.5,
                           },
                         })
@@ -528,12 +528,12 @@ export const EmphasisAnimationSection: React.FC<
                       min={0}
                       max={1}
                       step={0.05}
-                      value={[currentAnimation.focusPoint?.y || 0.5]}
-                      onValueChange={(value) =>
+                      value={currentAnimation.focusPoint?.y || 0.5}
+                      onChange={(value) =>
                         handleAnimationChange({
                           focusPoint: {
                             x: currentAnimation.focusPoint?.x || 0.5,
-                            y: value[0],
+                            y: value,
                           },
                         })
                       }

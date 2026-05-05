@@ -8,7 +8,7 @@ import {
   generateDefaultControlPoints,
   type GSAPMotionPathPoint,
 } from "@openreel/core";
-import { Button, Switch } from "@openreel/ui";
+import { Button, Switch } from "antd";
 
 interface MotionPathSectionProps {
   clipId: string;
@@ -168,7 +168,7 @@ export const MotionPathSection: React.FC<MotionPathSectionProps> = ({
             Motion Path
           </span>
         </div>
-        <Switch checked={isEnabled} onCheckedChange={handleEnableToggle} />
+        <Switch checked={isEnabled} onChange={handleEnableToggle} />
       </div>
 
       {isEnabled && (
@@ -196,7 +196,7 @@ export const MotionPathSection: React.FC<MotionPathSectionProps> = ({
               </span>
               <Switch
                 checked={autoOrient}
-                onCheckedChange={handleAutoOrientToggle}
+                onChange={handleAutoOrientToggle}
               />
             </div>
 
@@ -254,7 +254,7 @@ export const MotionPathSection: React.FC<MotionPathSectionProps> = ({
                 ? "bg-primary text-white"
                 : "bg-background-tertiary text-text-primary border border-border hover:bg-background-elevated"
             }`}
-            size="sm"
+            size="small"
           >
             <Route size={14} className="mr-2" />
             {isEditing ? "Exit Edit Mode" : "Edit Path on Canvas"}

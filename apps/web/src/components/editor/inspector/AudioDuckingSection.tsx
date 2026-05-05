@@ -9,7 +9,7 @@ import {
   Check,
   RefreshCw,
 } from "lucide-react";
-import { Slider } from "@openreel/ui";
+import { Slider } from 'antd';
 import { useProjectStore } from "../../../stores/project-store";
 import type { Track } from "@openreel/core";
 
@@ -248,9 +248,9 @@ export const AudioDuckingSection: React.FC<AudioDuckingSectionProps> = ({
                     min={-50}
                     max={-10}
                     step={1}
-                    value={[settings.threshold]}
-                    onValueChange={(value) =>
-                      updateSetting("threshold", value[0])
+                    value={settings.threshold}
+                    onChange={(value) =>
+                      updateSetting("threshold", value)
                     }
                   />
                   <p className="text-[8px] text-text-muted">
@@ -271,9 +271,9 @@ export const AudioDuckingSection: React.FC<AudioDuckingSectionProps> = ({
                     min={0}
                     max={100}
                     step={5}
-                    value={[settings.reduction * 100]}
-                    onValueChange={(value) =>
-                      updateSetting("reduction", value[0] / 100)
+                    value={settings.reduction * 100}
+                    onChange={(value) =>
+                      updateSetting("reduction", value / 100)
                     }
                   />
                   <p className="text-[8px] text-text-muted">
@@ -309,9 +309,9 @@ export const AudioDuckingSection: React.FC<AudioDuckingSectionProps> = ({
                       min={0.01}
                       max={0.5}
                       step={0.01}
-                      value={[settings.attack]}
-                      onValueChange={(value) =>
-                        updateSetting("attack", value[0])
+                      value={settings.attack}
+                      onChange={(value) =>
+                        updateSetting("attack", value)
                       }
                     />
                     <p className="text-[8px] text-text-muted">
@@ -332,9 +332,9 @@ export const AudioDuckingSection: React.FC<AudioDuckingSectionProps> = ({
                       min={0.1}
                       max={1}
                       step={0.05}
-                      value={[settings.release]}
-                      onValueChange={(value) =>
-                        updateSetting("release", value[0])
+                      value={settings.release}
+                      onChange={(value) =>
+                        updateSetting("release", value)
                       }
                     />
                     <p className="text-[8px] text-text-muted">
@@ -355,9 +355,9 @@ export const AudioDuckingSection: React.FC<AudioDuckingSectionProps> = ({
                       min={0}
                       max={0.5}
                       step={0.05}
-                      value={[settings.holdTime]}
-                      onValueChange={(value) =>
-                        updateSetting("holdTime", value[0])
+                      value={settings.holdTime}
+                      onChange={(value) =>
+                        updateSetting("holdTime", value)
                       }
                     />
                     <p className="text-[8px] text-text-muted">

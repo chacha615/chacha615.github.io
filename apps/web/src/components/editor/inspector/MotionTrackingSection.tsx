@@ -12,7 +12,7 @@ import {
   Settings2,
   RefreshCw,
 } from "lucide-react";
-import { Slider, Checkbox, Label } from "@openreel/ui";
+import { Slider, Checkbox, Typography } from "antd";
 import {
   getMotionTrackingBridge,
   type MotionTrackingState,
@@ -285,8 +285,8 @@ export const MotionTrackingSection: React.FC<MotionTrackingSectionProps> = ({
                   min={30}
                   max={95}
                   step={5}
-                  value={[confidenceThreshold]}
-                  onValueChange={(value) => setConfidenceThreshold(value[0])}
+                  value={confidenceThreshold}
+                  onChange={(value) => setConfidenceThreshold(value)}
                 />
                 <p className="text-[8px] text-text-muted">
                   Higher = more accurate but may lose track easier
@@ -306,8 +306,8 @@ export const MotionTrackingSection: React.FC<MotionTrackingSectionProps> = ({
                   min={0}
                   max={10}
                   step={1}
-                  value={[smoothing]}
-                  onValueChange={(value) => setSmoothing(value[0])}
+                  value={smoothing}
+                  onChange={(value) => setSmoothing(value)}
                 />
                 <p className="text-[8px] text-text-muted">
                   Reduces jitter in tracking path
@@ -428,43 +428,43 @@ export const MotionTrackingSection: React.FC<MotionTrackingSectionProps> = ({
           </div>
 
           <div className="space-y-2">
-            <Label className="text-[10px] font-medium text-text-secondary">
-              Transform Options
-            </Label>
+            <Typography.Text className="text-[10px] font-medium text-text-secondary">
+                Transform Options
+            </Typography.Text>
             <div className="grid grid-cols-2 gap-2">
               <div className="flex items-center gap-2 p-2 bg-background-tertiary rounded-lg">
                 <Checkbox
                   id="apply-scale"
                   checked={applyScale}
-                  onCheckedChange={(checked) => {
-                    const value = checked === true;
+                  onChange={(e) => {
+                    const value = e.target.checked;
                     setApplyScale(value);
                     if (isApplied) {
                       bridge.setApplyScale(clipId, value);
                     }
                   }}
                 />
-                <Label
+                <label
                   htmlFor="apply-scale"
                   className="flex items-center gap-1 cursor-pointer"
                 >
                   <Maximize2 size={10} className="text-text-muted" />
                   <span className="text-[10px] text-text-secondary">Scale</span>
-                </Label>
+                </label>
               </div>
               <div className="flex items-center gap-2 p-2 bg-background-tertiary rounded-lg">
                 <Checkbox
                   id="apply-rotation"
                   checked={applyRotation}
-                  onCheckedChange={(checked) => {
-                    const value = checked === true;
+                  onChange={(e) => {
+                    const value = e.target.checked;
                     setApplyRotation(value);
                     if (isApplied) {
                       bridge.setApplyRotation(clipId, value);
                     }
                   }}
                 />
-                <Label
+                <label
                   htmlFor="apply-rotation"
                   className="flex items-center gap-1 cursor-pointer"
                 >
@@ -472,7 +472,7 @@ export const MotionTrackingSection: React.FC<MotionTrackingSectionProps> = ({
                   <span className="text-[10px] text-text-secondary">
                     Rotation
                   </span>
-                </Label>
+                </label>
               </div>
             </div>
           </div>

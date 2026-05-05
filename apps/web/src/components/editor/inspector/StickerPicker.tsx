@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useMemo } from "react";
 import { Smile, Sticker, Search, Plus, X } from "lucide-react";
-import { Input } from "@openreel/ui";
+import { Input } from "antd";
 import { getGraphicsBridge } from "../../../bridges";
 import type { StickerItem, EmojiItem } from "@openreel/core";
 

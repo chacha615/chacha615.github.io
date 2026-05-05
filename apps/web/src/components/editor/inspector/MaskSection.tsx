@@ -13,7 +13,7 @@ import {
   RefreshCw,
   type LucideIcon,
 } from "lucide-react";
-import { Slider } from "@openreel/ui";
+import { Slider } from "antd";
 import { useEngineStore } from "../../../stores/engine-store";
 import { useProjectStore } from "../../../stores/project-store";
 import type { Mask, MaskShape } from "@openreel/core";
@@ -134,8 +134,8 @@ const MaskItem: React.FC<{
               min={0}
               max={100}
               step={1}
-              value={[mask.feathering]}
-              onValueChange={(value) => onUpdateFeathering(value[0])}
+              value={mask.feathering}
+              onChange={(value) => onUpdateFeathering(value)}
             />
           </div>
 
@@ -150,8 +150,8 @@ const MaskItem: React.FC<{
               min={-100}
               max={100}
               step={1}
-              value={[mask.expansion]}
-              onValueChange={(value) => onUpdateExpansion(value[0])}
+              value={mask.expansion}
+              onChange={(value) => onUpdateExpansion(value)}
             />
           </div>
 
@@ -166,8 +166,8 @@ const MaskItem: React.FC<{
               min={0}
               max={100}
               step={1}
-              value={[mask.opacity * 100]}
-              onValueChange={(value) => onUpdateOpacity(value[0] / 100)}
+              value={mask.opacity * 100}
+              onChange={(value) => onUpdateOpacity(value / 100)}
             />
           </div>
 

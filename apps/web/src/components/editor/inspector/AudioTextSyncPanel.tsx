@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState, useMemo } from "react";
 import { Music, Loader2, AlertCircle, Check, Settings2, Image, Type, Video } from "lucide-react";
-import { Button, LabeledSlider } from "@openreel/ui";
+//import { Button, LabeledSlider } from "@openreel/ui";
+import { Button,Slider } from "antd";
 import {
   getBeatSyncBridge,
   type BeatSyncState,
@@ -226,16 +227,21 @@ export const AudioTextSyncPanel: React.FC<BeatSyncPanelProps> = ({ clipId }) => 
                   </div>
                 </div>
 
-                <LabeledSlider
-                  label="Offset"
-                  value={config.offsetMs}
-                  onChange={(v) => handleUpdateConfig({ offsetMs: v })}
-                  min={-500}
-                  max={500}
-                  step={10}
-                  unit="ms"
-                />
-
+        <div className="flex items-center justify-between space-y-1">
+          <span className="text-[10px] text-text-secondary">Offset</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {Math.round(config.offsetMs)}
+            ms
+          </span>
+        </div>
+        <Slider
+          value={config.offsetMs}
+          onChange={(values) => handleUpdateConfig({ offsetMs: values })}
+          min={-500}
+          max={500}
+          step={10}
+          className="h-1.5"
+        />
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] text-text-secondary">Downbeats Only</span>
                   <div className="flex gap-1">
@@ -313,7 +319,7 @@ export const AudioTextSyncPanel: React.FC<BeatSyncPanelProps> = ({ clipId }) => 
 
           <Button
             onClick={handleAnalyzeBeats}
-            variant="outline"
+            variant="outlined"
             className="w-full"
           >
             Re-analyze Beats

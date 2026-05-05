@@ -411,7 +411,7 @@ const PlaceholderInput: React.FC<PlaceholderInputProps> = ({
             <div className="flex items-center gap-3">
               <Slider
                 value={[Number(displayValue) || 0]}
-                onValueChange={(vals) => onChange(vals[0])}
+                onValueChange={(vals) => onChange(Array.isArray(vals) ? vals[0] : vals)}
                 min={min}
                 max={max}
                 step={step}

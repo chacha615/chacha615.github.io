@@ -7,7 +7,7 @@ import {
   Loader2,
   Info,
 } from "lucide-react";
-import { Slider } from "@openreel/ui";
+import { Slider } from "antd";
 import {
   getBackgroundRemovalEngine,
   initializeBackgroundRemovalEngine,
@@ -210,9 +210,9 @@ export const BackgroundRemovalSection: React.FC<
                 min={0}
                 max={50}
                 step={1}
-                value={[settings.blurAmount]}
-                onValueChange={(value) =>
-                  updateSettings({ blurAmount: value[0] })
+                value={settings.blurAmount}
+                onChange={(value) =>
+                  updateSettings({ blurAmount: value })
                 }
               />
             </div>
@@ -297,9 +297,9 @@ export const BackgroundRemovalSection: React.FC<
               min={0}
               max={10}
               step={1}
-              value={[settings.edgeBlur]}
-              onValueChange={(value) =>
-                updateSettings({ edgeBlur: value[0] })
+              value={settings.edgeBlur}
+              onChange={(value) =>
+                updateSettings({ edgeBlur: value })
               }
             />
           </div>
@@ -317,9 +317,9 @@ export const BackgroundRemovalSection: React.FC<
               min={0}
               max={100}
               step={1}
-              value={[settings.threshold * 100]}
-              onValueChange={(value) =>
-                updateSettings({ threshold: value[0] / 100 })
+              value={settings.threshold * 100}
+              onChange={(value) =>
+                updateSettings({ threshold: value / 100 })
               }
             />
           </div>

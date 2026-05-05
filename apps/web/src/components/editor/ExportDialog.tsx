@@ -531,7 +531,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = ({
                     onValueChange={(value) =>
                       setCustomSettings({
                         ...customSettings,
-                        quality: value[0],
+                        quality: Array.isArray(value) ? value[0] : value,
                       })
                     }
                     min={50}
@@ -694,7 +694,7 @@ export const ExportDialog: React.FC<ExportDialogProps> = ({
                               ...customSettings,
                               upscaling: {
                                 ...customSettings.upscaling!,
-                                sharpening: value[0] / 100,
+                                sharpening: (Array.isArray(value) ? value[0] : value) / 100,
                               },
                             })
                           }

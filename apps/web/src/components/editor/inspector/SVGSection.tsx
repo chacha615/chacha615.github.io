@@ -3,13 +3,9 @@ import { useProjectStore } from "../../../stores/project-store";
 import type { GraphicAnimation, GraphicAnimationType } from "@openreel/core";
 import { SVG_ANIMATION_PRESETS } from "@openreel/core";
 import {
-  LabeledSlider as Slider,
+  Slider,
   Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@openreel/ui";
+} from "antd";
 
 const ColorPicker: React.FC<{
   label: string;
@@ -188,14 +184,22 @@ export const SVGSection: React.FC<SVGSectionProps> = ({ clipId }) => {
                 value={colorStyle.tintColor || "#ffffff"}
                 onChange={handleTintColorChange}
               />
-              <Slider
-                label="Opacity"
-                value={colorStyle.tintOpacity || 1}
-                onChange={handleTintOpacityChange}
-                min={0}
-                max={1}
-                step={0.1}
-              />
+              <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Opacity</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {(colorStyle.tintOpacity || 1).toFixed(1)}
+          </span>
+        </div>
+        <Slider
+          value={colorStyle.tintOpacity || 1}
+          onChange={(values) => handleTintOpacityChange(values)}
+          min={0}
+          max={1}
+          step={0.1}
+          className="h-1.5"
+        />
+      </div>
             </>
           )}
         </div>
@@ -205,30 +209,33 @@ export const SVGSection: React.FC<SVGSectionProps> = ({ clipId }) => {
           Entry Animation
         </span>
         <Select
+          className="w-full bg-background-tertiary border-border text-text-primary"
           value={entryAnimation?.type || "none"}
-          onValueChange={(v) => handleEntryAnimationChange(v as GraphicAnimationType)}
+          onChange={(v) => handleEntryAnimationChange(v as GraphicAnimationType)}
+          options={ANIMATION_PRESETS.map((preset) => ({
+              value: preset.value,
+              label: preset.label,
+  }))}
         >
-          <SelectTrigger className="w-full bg-background-tertiary border-border text-text-primary">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent className="bg-background-secondary border-border">
-            {ANIMATION_PRESETS.map((preset) => (
-              <SelectItem key={preset.value} value={preset.value}>
-                {preset.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
         </Select>
 
         {entryAnimation && entryAnimation.type !== "none" && (
-          <Slider
-            label="Duration"
-            value={entryAnimation.duration}
-            onChange={handleEntryDurationChange}
-            min={0.1}
-            max={3}
-            step={0.1}
-          />
+          <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Duration</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {(entryAnimation.duration).toFixed(1)}
+          </span>
+        </div>
+        <Slider
+          value={entryAnimation.duration}
+          onChange={(values) => handleEntryDurationChange(values)}
+          min={0.1}
+          max={3}
+          step={0.1}
+          className="h-1.5"
+        />
+      </div>
         )}
       </div>
 
@@ -237,30 +244,33 @@ export const SVGSection: React.FC<SVGSectionProps> = ({ clipId }) => {
           Exit Animation
         </span>
         <Select
+          className="w-full bg-background-tertiary border-border text-text-primary"
           value={exitAnimation?.type || "none"}
-          onValueChange={(v) => handleExitAnimationChange(v as GraphicAnimationType)}
+          onChange={(v) => handleExitAnimationChange(v as GraphicAnimationType)}
+          options={ANIMATION_PRESETS.map((preset) => ({
+              value: preset.value,
+              label: preset.label,
+  }))}
         >
-          <SelectTrigger className="w-full bg-background-tertiary border-border text-text-primary">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent className="bg-background-secondary border-border">
-            {ANIMATION_PRESETS.map((preset) => (
-              <SelectItem key={preset.value} value={preset.value}>
-                {preset.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
         </Select>
 
         {exitAnimation && exitAnimation.type !== "none" && (
-          <Slider
-            label="Duration"
-            value={exitAnimation.duration}
-            onChange={handleExitDurationChange}
-            min={0.1}
-            max={3}
-            step={0.1}
-          />
+          <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Duration</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {(exitAnimation.duration).toFixed(1)}
+          </span>
+        </div>
+        <Slider
+          value={exitAnimation.duration}
+          onChange={(values) => handleExitDurationChange(values)}
+          min={0.1}
+          max={3}
+          step={0.1}
+          className="h-1.5"
+        />
+      </div>
         )}
       </div>
     </div>

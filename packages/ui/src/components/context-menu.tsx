@@ -156,17 +156,19 @@ ContextMenuContent.displayName = "ContextMenuContent"
 interface ContextMenuItemProps extends React.HTMLAttributes<HTMLDivElement> {
   inset?: boolean
   children?: React.ReactNode
+  disabled?: boolean
 }
 
 const ContextMenuItem = React.forwardRef<
   HTMLDivElement,
   ContextMenuItemProps
->(({ className, inset, children, ...props }, ref) => (
+>(({ className, inset, disabled, children, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
-      "relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed",
+      "relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
       inset && "pl-8",
+      disabled && "pointer-events-none opacity-50 cursor-not-allowed",
       className
     )}
     {...props}

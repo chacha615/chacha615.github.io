@@ -9,7 +9,7 @@ import {
   Clock,
   Volume2,
 } from "lucide-react";
-import { Input } from "@openreel/ui";
+import { Input } from "antd";
 import { useEngineStore } from "../../../stores/engine-store";
 import { useProjectStore } from "../../../stores/project-store";
 import {

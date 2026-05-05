@@ -177,13 +177,14 @@ const PopoverTrigger = React.forwardRef<any, PopoverTriggerProps>(({ children, .
 })
 PopoverTrigger.displayName = "PopoverTrigger"
 
-const PopoverContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement> & { align?: string; sideOffset?: number }>(
-  ({ className, align = "center", sideOffset = 4, style, children, ...props }, ref) => {
+const PopoverContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement> & { align?: string; sideOffset?: number; side?: string }>(
+  ({ className, align = "center", sideOffset = 4, side, style, children, ...props }, ref) => {
     // Popover Root 会将其 children 放入 antd overlay；此处保留类名和数据属性以保持样式语义
     return (
       <div
         ref={ref}
         data-align={align}
+        data-side={side}
         data-side-offset={sideOffset}
         className={cn(
           "rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none",

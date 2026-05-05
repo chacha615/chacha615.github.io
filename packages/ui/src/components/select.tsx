@@ -6,8 +6,6 @@ import { Check, ChevronDown, ChevronUp } from "lucide-react"
 
 import { cn } from "@openreel/ui/lib/utils"
 
-const { Option, OptGroup } = (AntdSelect as any)
-
 type SelectProps = {
   value?: string | number | Array<string | number>
   defaultValue?: string | number | Array<string | number>
@@ -25,14 +23,9 @@ type SelectProps = {
 /**
  * 将原 Radix Select 的组合式 children 映射为 antd Select 的 options
  * - 保持原样式类名与外观语义（尽量复现 Trigger / Item 的类）
- * - 保留图标库（lucide-react 的 Check/Chevron）
+ * - 保留图标库（lucide-react 的 Check）
  * - 导出原先的子组件以保持兼容（这些子组件为语义占位）
  */
-
-const isDisplayName = (el: React.ReactElement, name: string) => {
-  const t = el.type as any
-  return t?.displayName === name || t === (name as any)
-}
 
 const buildOptions = (children: React.ReactNode, selectedValue: any) => {
   const arr = React.Children.toArray(children)
@@ -167,7 +160,9 @@ Select.displayName = "Select"
 const SelectGroup = ({ children }: { children?: React.ReactNode }) => <>{children}</>
 SelectGroup.displayName = "SelectGroup"
 
-const SelectValue = ({ children }: { children?: React.ReactNode }) => <>{children}</>
+const SelectValue = ({ children, placeholder }: { children?: React.ReactNode; placeholder?: string }) => (
+  <>{children || placeholder}</>
+)
 SelectValue.displayName = "SelectValue"
 
 const SelectTrigger = React.forwardRef<any, React.ComponentPropsWithoutRef<"button">>(({ children, ...props }, ref) => {
@@ -179,21 +174,9 @@ const SelectTrigger = React.forwardRef<any, React.ComponentPropsWithoutRef<"butt
 })
 SelectTrigger.displayName = "SelectTrigger"
 
-const SelectScrollUpButton = React.forwardRef<any, React.ComponentPropsWithoutRef<"div">>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("flex cursor-default items-center justify-center py-1", className)} {...props}>
-    <ChevronUp className="h-4 w-4" />
-  </div>
-))
-SelectScrollUpButton.displayName = "SelectScrollUpButton"
-
-const SelectScrollDownButton = React.forwardRef<any, React.ComponentPropsWithoutRef<"div">>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("flex cursor-default items-center justify-center py-1", className)} {...props}>
-    <ChevronDown className="h-4 w-4" />
-  </div>
-))
-SelectScrollDownButton.displayName = "SelectScrollDownButton"
-
-const SelectContent = ({ children }: { children?: React.ReactNode }) => <>{children}</>
+const SelectContent = ({ children, className }: { children?: React.ReactNode; className?: string }) => (
+  <div className={cn("z-50", className)}>{children}</div>
+)
 SelectContent.displayName = "SelectContent"
 
 const SelectLabel = ({ children, className }: { children?: React.ReactNode; className?: string }) => (
@@ -208,6 +191,20 @@ SelectItem.displayName = "SelectItem"
 
 const SelectSeparator = () => <div className="my-1 h-px bg-muted" />
 SelectSeparator.displayName = "SelectSeparator"
+
+const SelectScrollUpButton = ({ className }: { className?: string }) => (
+  <button className={cn("flex items-center justify-center py-1", className)}>
+    <ChevronUp className="h-4 w-4" />
+  </button>
+)
+SelectScrollUpButton.displayName = "SelectScrollUpButton"
+
+const SelectScrollDownButton = ({ className }: { className?: string }) => (
+  <button className={cn("flex items-center justify-center py-1", className)}>
+    <ChevronDown className="h-4 w-4" />
+  </button>
+)
+SelectScrollDownButton.displayName = "SelectScrollDownButton"
 
 export {
   Select,

@@ -7,7 +7,7 @@ import {
   Play,
   CheckCircle,
 } from "lucide-react";
-import { Slider } from "@openreel/ui";
+import { Slider } from "antd";
 import {
   getAutoReframeEngine,
   initializeAutoReframeEngine,
@@ -261,10 +261,10 @@ export const AutoReframeSection: React.FC<AutoReframeSectionProps> = ({
             min={0}
             max={100}
             step={1}
-            value={[reframeSettings.trackingSpeed * 100]}
-            onValueChange={(value) =>
+            value={reframeSettings.trackingSpeed * 100}
+            onChange={(value) =>
               updateLocalSettings({
-                trackingSpeed: value[0] / 100,
+                trackingSpeed: value / 100,
               })
             }
           />
@@ -281,9 +281,9 @@ export const AutoReframeSection: React.FC<AutoReframeSectionProps> = ({
             min={0}
             max={100}
             step={1}
-            value={[reframeSettings.smoothing * 100]}
-            onValueChange={(value) =>
-              updateLocalSettings({ smoothing: value[0] / 100 })
+            value={reframeSettings.smoothing * 100}
+            onChange={(value) =>
+              updateLocalSettings({ smoothing: value / 100 })
             }
           />
         </div>
@@ -301,10 +301,10 @@ export const AutoReframeSection: React.FC<AutoReframeSectionProps> = ({
             min={0}
             max={100}
             step={1}
-            value={[reframeSettings.centerBias * 100]}
-            onValueChange={(value) =>
+            value={reframeSettings.centerBias * 100}
+            onChange={(value) =>
               updateLocalSettings({
-                centerBias: value[0] / 100,
+                centerBias: value / 100,
               })
             }
           />

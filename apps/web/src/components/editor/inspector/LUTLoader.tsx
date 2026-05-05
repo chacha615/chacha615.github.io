@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from "react";
 import { Upload, X, AlertCircle } from "lucide-react";
-import { Slider } from "@openreel/ui";
+import { Slider } from "antd";
 import type { LUTData } from "@openreel/core";
 
 interface LUTLoaderProps {
@@ -27,8 +27,8 @@ const IntensitySlider: React.FC<{
         min={0}
         max={100}
         step={1}
-        value={[percentage]}
-        onValueChange={(v) => onChange(v[0] / 100)}
+        value={percentage}
+        onChange={(v) => onChange(v / 100)}
       />
     </div>
   );

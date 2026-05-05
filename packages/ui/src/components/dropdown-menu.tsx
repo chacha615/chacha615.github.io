@@ -137,12 +137,14 @@ DropdownMenuSubContent.displayName = "DropdownMenuSubContent"
 
 interface DropdownMenuContentProps extends React.HTMLAttributes<HTMLDivElement> {
   sideOffset?: number
+  side?: string
+  align?: string
 }
 
 const DropdownMenuContent = React.forwardRef<
   HTMLDivElement,
   DropdownMenuContentProps
->(({ children, className, sideOffset = 4, ...props }, ref) => {
+>(({ children, className, sideOffset = 4, side, align, ...props }, ref) => {
   return (
     <div
       ref={ref}

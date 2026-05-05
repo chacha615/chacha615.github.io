@@ -5,14 +5,7 @@ import {
   getBlendModeName,
   type BlendMode,
 } from "@openreel/core";
-import {
-  LabeledSlider as Slider,
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@openreel/ui";
+import { Slider,Select } from "antd";
 
 interface BlendingSectionProps {
   clipId: string;
@@ -84,19 +77,16 @@ export const BlendingSection: React.FC<BlendingSectionProps> = ({ clipId }) => {
       <div className="space-y-1">
           <span className="text-[10px] text-text-secondary">Blend Mode</span>
           <Select
+            className="w-full bg-background-tertiary border-border text-text-primary"
             value={blendMode}
-            onValueChange={(v) => handleBlendModeChange(v as BlendMode)}
-          >
-            <SelectTrigger className="w-full bg-background-tertiary border-border text-text-primary">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="bg-background-secondary border-border">
-              {availableBlendModes.map((mode) => (
-                <SelectItem key={mode} value={mode}>
-                  {getBlendModeName(mode)}
-                </SelectItem>
+            onChange={(v) => handleBlendModeChange(v as BlendMode)}
+            options={availableBlendModes.map((mode) => (
+              {
+                value: mode,
+                label: getBlendModeName(mode),
+              }
               ))}
-            </SelectContent>
+>
           </Select>
           <p className="text-[9px] text-text-muted">
             {blendMode === "normal" && "Default blending, no special effect"}
@@ -114,14 +104,19 @@ export const BlendingSection: React.FC<BlendingSectionProps> = ({ clipId }) => {
           </p>
         </div>
 
+        <div className="flex items-center justify-between space-y-1 h-1.5">
+          <span className="text-[10px] text-text-secondary">Opacity</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {Math.round(blendOpacity)}
+            %
+          </span>
+        </div>
         <Slider
-          label="Opacity"
           value={blendOpacity}
-          onChange={handleOpacityChange}
+          onChange={(values) => handleOpacityChange(values)}
           min={0}
           max={100}
           step={1}
-          unit="%"
         />
 
       {blendMode !== "normal" && (

@@ -13,7 +13,8 @@ import {
   FileCode,
   Smile,
 } from "lucide-react";
-import { Input, ScrollArea } from "@openreel/ui";
+//import { Input, ScrollArea } from "@openreel/ui";
+import { Input,Empty} from "antd";
 import { useProjectStore } from "../../../stores/project-store";
 import type { HistorySnapshot } from "@openreel/core";
 
@@ -232,64 +233,65 @@ export const HistoryPanel: React.FC = () => {
         )}
       </div>
 
-      <ScrollArea className="flex-1">
-        {combinedHistory.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-text-muted">
-            <History size={24} className="mb-2 opacity-30" />
-            <p className="text-xs">No actions yet</p>
+     <div className="flex-1 overflow-auto custom-scrollbar">
+  {combinedHistory.length === 0 ? (
+    <Empty 
+      description="No actions yet" 
+      image={<History size={24} className="opacity-30" />}
+      className="py-8"
+    />
+  ) : (
+    <div className="p-2 space-y-0.5">
+      {combinedHistory.map((item) => {
+        const ClipIcon = item.isClipEntry ? getClipIcon(item.clipType) : null;
+        return (
+          <div
+            key={item.id}
+            className={`flex items-center gap-2 p-2 rounded transition-colors ${
+              item.isCurrent
+                ? "bg-primary/20 border border-primary/30"
+                : "hover:bg-background-tertiary"
+            }`}
+          >
+            {item.isClipEntry && ClipIcon ? (
+              <ClipIcon size={12} className={item.isCurrent ? "text-primary" : "text-text-muted"} />
+            ) : (
+              <div
+                className={`w-1.5 h-1.5 rounded-full ${
+                  item.isCurrent ? "bg-primary" : "bg-text-muted"
+                }`}
+              />
+            )}
+            <div className="flex-1 min-w-0">
+              <p
+                className={`text-xs truncate ${
+                  item.isCurrent
+                    ? "text-text-primary"
+                    : "text-text-secondary"
+                }`}
+              >
+                {item.description}
+              </p>
+              <p className="text-[10px] text-text-muted">
+                {formatTime(item.timestamp)}
+              </p>
+            </div>
+            {item.groupId && (
+              <span className="px-1 py-0.5 bg-background-tertiary rounded text-[8px] text-text-muted">
+                grouped
+              </span>
+            )}
+            {item.isClipEntry && (
+              <span className="px-1 py-0.5 bg-amber-500/20 rounded text-[8px] text-amber-400">
+                clip
+              </span>
+            )}
           </div>
-        ) : (
-          <div className="p-2 space-y-0.5">
-            {combinedHistory.map((item) => {
-              const ClipIcon = item.isClipEntry ? getClipIcon(item.clipType) : null;
-              return (
-                <div
-                  key={item.id}
-                  className={`flex items-center gap-2 p-2 rounded transition-colors ${
-                    item.isCurrent
-                      ? "bg-primary/20 border border-primary/30"
-                      : "hover:bg-background-tertiary"
-                  }`}
-                >
-                  {item.isClipEntry && ClipIcon ? (
-                    <ClipIcon size={12} className={item.isCurrent ? "text-primary" : "text-text-muted"} />
-                  ) : (
-                    <div
-                      className={`w-1.5 h-1.5 rounded-full ${
-                        item.isCurrent ? "bg-primary" : "bg-text-muted"
-                      }`}
-                    />
-                  )}
-                  <div className="flex-1 min-w-0">
-                    <p
-                      className={`text-xs truncate ${
-                        item.isCurrent
-                          ? "text-text-primary"
-                          : "text-text-secondary"
-                      }`}
-                    >
-                      {item.description}
-                    </p>
-                    <p className="text-[10px] text-text-muted">
-                      {formatTime(item.timestamp)}
-                    </p>
-                  </div>
-                  {item.groupId && (
-                    <span className="px-1 py-0.5 bg-background-tertiary rounded text-[8px] text-text-muted">
-                      grouped
-                    </span>
-                  )}
-                  {item.isClipEntry && (
-                    <span className="px-1 py-0.5 bg-amber-500/20 rounded text-[8px] text-amber-400">
-                      clip
-                    </span>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </ScrollArea>
+        );
+      })}
+    </div>
+  )}
+</div>
 
       <div className="p-2 border-t border-border bg-background-tertiary">
         <div className="flex items-center justify-between text-[10px] text-text-muted">

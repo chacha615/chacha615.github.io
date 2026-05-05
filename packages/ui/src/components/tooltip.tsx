@@ -24,6 +24,7 @@ interface TooltipProps extends Omit<AntTooltipProps, "title"> {
   delayDuration?: number
   onOpenChange?: (open: boolean) => void
   open?: boolean
+  asChild?: boolean
 }
 
 const Tooltip: React.FC<TooltipProps> = ({

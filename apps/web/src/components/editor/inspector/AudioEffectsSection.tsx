@@ -10,7 +10,7 @@ import {
   DEFAULT_EQ_BANDS,
 } from "../../../bridges/audio-bridge-effects";
 import { useProjectStore } from "../../../stores/project-store";
-import { LabeledSlider as Slider } from "@openreel/ui";
+import { Slider } from 'antd';
 
 const SubSection: React.FC<{
   title: string;
@@ -424,42 +424,66 @@ export const AudioEffectsSection: React.FC<AudioEffectsSectionProps> = ({
         enabled={compressorEnabled}
         onToggle={handleCompressorToggle}
       >
-        <div className="space-y-2">
-          <Slider
-            label="Threshold"
-            value={compressor.threshold}
-            onChange={(v) => handleCompressorChange("threshold", v)}
-            min={-60}
-            max={0}
-            unit="dB"
-          />
-          <Slider
-            label="Ratio"
-            value={compressor.ratio}
-            onChange={(v) => handleCompressorChange("ratio", v)}
-            min={1}
-            max={20}
-            step={0.5}
-            unit=":1"
-          />
-          <Slider
-            label="Attack"
-            value={compressor.attack * 1000}
-            onChange={(v) => handleCompressorChange("attack", v / 1000)}
-            min={1}
-            max={100}
-            step={1}
-            unit="ms"
-          />
-          <Slider
-            label="Release"
-            value={compressor.release * 1000}
-            onChange={(v) => handleCompressorChange("release", v / 1000)}
-            min={10}
-            max={1000}
-            unit="ms"
-          />
+        <div className="space-y-1 space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Threshold</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            { Math.round(compressor.threshold)}
+          </span>
         </div>
+        <Slider
+          value={compressor.threshold}
+          onChange={(values) => handleCompressorChange("threshold", values)}
+          min={60}
+          max={0}
+          className="h-1.5"
+        />
+      </div>
+          <div className="space-y-1 space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Ratio</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {compressor.ratio.toFixed(1)}
+            :1
+          </span>
+        </div>
+        <Slider
+          value={compressor.ratio}
+          onChange={(values) => handleCompressorChange("ratio", values)}
+          min={1}
+          max={20}
+        />
+      </div>
+            <div className="space-y-1 space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Attack</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {Math.round(compressor.attack * 1000)}
+            :ms
+          </span>
+        </div>
+        <Slider
+          value={compressor.attack * 1000}
+          onChange={(values) => handleCompressorChange("attack", values / 1000)}
+          min={1}
+          max={100}
+        />
+      </div>
+          <div className="space-y-1 space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Release</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {Math.round(compressor.release * 1000)}
+            ms
+          </span>
+        </div>
+        <Slider
+          value={compressor.release * 1000}
+          onChange={(values) => handleCompressorChange("release", values / 1000)}
+          min={10}
+          max={1000}
+        />
+      </div>
       </SubSection>
 
       <SubSection
@@ -468,30 +492,51 @@ export const AudioEffectsSection: React.FC<AudioEffectsSectionProps> = ({
         onToggle={handleReverbToggle}
       >
         <div className="space-y-2">
-          <Slider
-            label="Room Size"
-            value={reverb.roomSize * 100}
-            onChange={(v) => handleReverbChange("roomSize", v / 100)}
-            min={0}
-            max={100}
-            unit="%"
-          />
-          <Slider
-            label="Damping"
-            value={reverb.damping * 100}
-            onChange={(v) => handleReverbChange("damping", v / 100)}
-            min={0}
-            max={100}
-            unit="%"
-          />
-          <Slider
-            label="Wet/Dry"
-            value={reverb.wetLevel * 100}
-            onChange={(v) => handleReverbChange("wetLevel", v / 100)}
-            min={0}
-            max={100}
-            unit="%"
-          />
+          <div className="space-y-1 space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Room Size</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {Math.round(reverb.roomSize * 10)}
+            %
+          </span>
+        </div>
+        <Slider
+          value={reverb.roomSize * 100}
+          onChange={(values) => handleReverbChange("roomSize", values / 100)}
+          min={0}
+          max={100}
+        />
+      </div>
+           <div className="space-y-1 space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Damping</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {Math.round(reverb.damping * 100)}
+            %
+          </span>
+        </div>
+        <Slider
+          value={reverb.damping * 100}
+          onChange={(values) => handleReverbChange("damping", values / 100)}
+          min={0}
+          max={100}
+        />
+      </div>
+           <div className="space-y-1 space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Wet/Dry</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {Math.round(reverb.wetLevel * 100)}
+            %
+          </span>
+        </div>
+        <Slider
+          value={reverb.wetLevel * 1000}
+          onChange={(values) => handleReverbChange("wetLevel", values / 100)}
+          min={0}
+          max={100}
+        />
+      </div>
         </div>
       </SubSection>
 
@@ -501,30 +546,51 @@ export const AudioEffectsSection: React.FC<AudioEffectsSectionProps> = ({
         onToggle={handleDelayToggle}
       >
         <div className="space-y-2">
-          <Slider
-            label="Time"
-            value={delay.time * 1000}
-            onChange={(v) => handleDelayChange("time", v / 1000)}
-            min={1}
-            max={2000}
-            unit="ms"
-          />
-          <Slider
-            label="Feedback"
-            value={delay.feedback * 100}
-            onChange={(v) => handleDelayChange("feedback", v / 100)}
-            min={0}
-            max={95}
-            unit="%"
-          />
-          <Slider
-            label="Wet Level"
-            value={delay.wetLevel * 100}
-            onChange={(v) => handleDelayChange("wetLevel", v / 100)}
-            min={0}
-            max={100}
-            unit="%"
-          />
+           <div className="space-y-1 space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Time</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {Math.round(delay.time * 1000)}
+            ms
+          </span>
+        </div>
+        <Slider
+          value={delay.time * 1000}
+          onChange={(values) => handleDelayChange("time", values / 1000)}
+          min={1}
+          max={2000}
+        />
+      </div>
+           <div className="space-y-1 space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Feedback</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {Math.round(delay.feedback * 100)}
+            %
+          </span>
+        </div>
+        <Slider
+          value={delay.feedback * 100}
+          onChange={(values) => handleDelayChange("feedback", values / 100)}
+          min={0}
+          max={95}
+        />
+      </div>
+           <div className="space-y-1 space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Wet Level</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {Math.round(delay.wetLevel * 100)}
+            %
+          </span>
+        </div>
+        <Slider
+          value={delay.wetLevel * 100}
+          onChange={(values) => handleDelayChange("wetLevel", values / 100)}
+          min={0}
+          max={100}
+        />
+      </div>
         </div>
       </SubSection>
     </div>

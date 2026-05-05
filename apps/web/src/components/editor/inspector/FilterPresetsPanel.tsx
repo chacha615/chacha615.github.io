@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo } from "react";
 import { Film, Camera, Moon, Palette, Wand2, Check } from "lucide-react";
-import { Slider } from "@openreel/ui";
+import { Slider } from "antd";
 import { useProjectStore } from "../../../stores/project-store";
 import { useUIStore } from "../../../stores/ui-store";
 import { toast } from "../../../stores/notification-store";
@@ -203,8 +203,8 @@ export const FilterPresetsPanel: React.FC<FilterPresetsPanelProps> = ({
             min={0}
             max={100}
             step={1}
-            value={[intensityValue]}
-            onValueChange={(value) => setIntensityValue(value[0])}
+            value={intensityValue}
+            onChange={(value) => setIntensityValue(value)}
           />
           <button
             onClick={handleClearEffects}

@@ -8,7 +8,7 @@ import {
   DEFAULT_NOISE_REDUCTION,
 } from "../../../bridges/audio-bridge-effects";
 import { useProjectStore } from "../../../stores/project-store";
-import { LabeledSlider as Slider } from "@openreel/ui";
+import { Slider } from "antd";
 
 /**
  * NoiseReductionSection Props
@@ -219,43 +219,71 @@ export const NoiseReductionSection: React.FC<NoiseReductionSectionProps> = ({
       {/* Content */}
       {isOpen && (
         <div className="p-3 space-y-3">
-          <Slider
-            label="Threshold"
-            value={config.threshold}
-            onChange={(v) => handleConfigChange("threshold", v)}
-            min={-80}
-            max={0}
-            unit="dB"
-          />
+          <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Threshold</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {Math.round(config.threshold)}
+            dB
+          </span>
+        </div>
+        <Slider
+          value={config.threshold}
+          onChange={(values) => handleConfigChange("threshold", values)}
+          min={-80}
+          max={0}
+        />
+      </div>
 
-          <Slider
-            label="Reduction"
-            value={config.reduction * 100}
-            onChange={(v) => handleConfigChange("reduction", v / 100)}
-            min={0}
-            max={100}
-            unit="%"
-          />
+           <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Reduction</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {Math.round(config.reduction * 100)}
+            %
+          </span>
+        </div>
+        <Slider
+          value={config.reduction * 100}
+          onChange={(values) => handleConfigChange("reduction", values / 100)}
+          min={0}
+          max={100}
+        />
+      </div>
 
           {/* Attack */}
-          <Slider
-            label="Attack"
-            value={config.attack ?? 10}
-            onChange={(v) => handleConfigChange("attack", v)}
-            min={0}
-            max={100}
-            unit="ms"
-          />
+           <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Attack</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {Math.round(config.attack ?? 10)}
+            ms
+          </span>
+        </div>
+        <Slider
+          value={config.attack ?? 10}
+          onChange={(values) => handleConfigChange("attack", values)}
+          min={0}
+          max={100}
+        />
+      </div>
 
           {/* Release */}
-          <Slider
-            label="Release"
-            value={config.release ?? 100}
-            onChange={(v) => handleConfigChange("release", v)}
-            min={0}
-            max={500}
-            unit="ms"
-          />
+           <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Release</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {Math.round(config.release ?? 100)}
+            ms
+          </span>
+        </div>
+        <Slider
+          value={config.release ?? 100}
+          onChange={(values) => handleConfigChange("release", values)}
+          min={0}
+          max={500}
+        />
+      </div>
 
           <button
             onClick={handleLearnNoiseProfile}

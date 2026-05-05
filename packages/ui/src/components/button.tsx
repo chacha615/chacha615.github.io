@@ -1,7 +1,8 @@
+// ...existing code...
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-
+import { Button as AntdButton } from "antd"
 import { cn } from "@openreel/ui/lib/utils"
 
 const buttonVariants = cva(
@@ -41,14 +42,52 @@ export interface ButtonProps
   asChild?: boolean
 }
 
+/**
+ * Button 二次封装（基于 antd Button）
+ * - 保留原有 variant/size/asChild/className/children 等 API
+ * - 使用 cva 样式类保持原有外观
+ * - 当 asChild 为 true 时，使用 radix Slot 渲染任意元素（保持原先行为）
+ */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button"
+    // 生成样式类（保持与原来一致）
+    const classes = cn(buttonVariants({ variant, size }), className)
+
+    if (asChild) {
+      // 把样式和属性传递给子元素（保持原有 asChild 行为）
+      const Comp: any = Slot
+      return <Comp className={classes} ref={ref} {...(props as any)} />
+    }
+
+    // 将部分语义映射到 antd Button（尽量保留原有外观）
+    // 映射 variant -> antd.type，size -> antd.size（尽量兼容）
+    const typeMap: Record<string, any> = {
+      default: "primary",
+      destructive: "default",
+      outline: "default",
+      secondary: "default",
+      ghost: "default",
+      link: "link",
+    }
+    const sizeMap: Record<string, any> = {
+      default: "middle",
+      sm: "small",
+      lg: "large",
+      icon: "middle",
+      "icon-sm": "small",
+      "icon-xs": "small",
+    }
+
+    const antdType = typeMap[variant ?? "default"]
+    const antdSize = sizeMap[size ?? "default"]
+
     return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
+      <AntdButton
+        ref={ref as any}
+        className={classes}
+        type={antdType as any}
+        size={antdSize as any}
+        {...(props as any)}
       />
     )
   }
@@ -56,3 +95,5 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = "Button"
 
 export { Button, buttonVariants }
+export default Button
+// ...existing code...

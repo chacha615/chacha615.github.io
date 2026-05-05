@@ -15,13 +15,7 @@ import { useProjectStore } from "../../../stores/project-store";
 import type { TextStyle, FontWeight } from "@openreel/core";
 import {
   Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-  SelectGroup,
-  SelectLabel,
-} from "@openreel/ui";
+} from "antd";
 
 const ColorPicker: React.FC<{
   label: string;
@@ -161,28 +155,26 @@ const FontSelector: React.FC<{
   value: string;
   onChange: (font: string) => void;
 }> = ({ value, onChange }) => {
+  const options = useMemo(() => {
+    return Object.entries(FONT_CATEGORIES).map(([category, fonts]) => ({
+      label: category,
+      options: fonts.map((font) => ({
+        value: font,
+        label: font,
+        style: { fontFamily: font },
+      })),
+    }));
+  }, []);
+
   return (
     <div className="flex items-center justify-between">
       <span className="text-[10px] text-text-secondary">Font</span>
-      <Select value={value} onValueChange={onChange}>
-        <SelectTrigger className="max-w-[140px] bg-background-tertiary border-border text-text-primary text-[10px]">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent className="bg-background-secondary border-border max-h-80">
-          {Object.entries(FONT_CATEGORIES).map(([category, fonts]) => (
-            <SelectGroup key={category}>
-              <SelectLabel className="text-text-muted text-[10px] font-medium">
-                {category}
-              </SelectLabel>
-              {fonts.map((font) => (
-                <SelectItem key={font} value={font} style={{ fontFamily: font }}>
-                  {font}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          ))}
-        </SelectContent>
-      </Select>
+      <Select
+        className="max-w-[140px] bg-background-tertiary border-border text-text-primary text-[10px]"
+        value={value}
+        onChange={onChange}
+        options={options}
+      />
     </div>
   );
 };

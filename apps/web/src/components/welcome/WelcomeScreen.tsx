@@ -8,7 +8,7 @@ import {
   Square,
   FolderOpen,
 } from "lucide-react";
-import { Button, Switch, Label } from "@openreel/ui";
+import {Button,Switch,Typography} from "antd"
 import { useProjectStore } from "../../stores/project-store";
 import { useUIStore } from "../../stores/ui-store";
 import { SOCIAL_MEDIA_PRESETS, type SocialMediaCategory } from "@openreel/core";
@@ -200,8 +200,8 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ initialTab }) => {
       <div className="fixed inset-0 z-50 bg-background flex flex-col">
         <header className="flex items-center justify-between px-6 py-4 border-b border-border">
           <Button
-            variant="ghost"
-            size="sm"
+            ghost
+            size="small"
             onClick={() => setViewMode("home")}
           >
             <ArrowRight className="rotate-180" size={16} />
@@ -222,8 +222,8 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ initialTab }) => {
       <div className="fixed inset-0 z-50 bg-background flex flex-col">
         <header className="flex items-center justify-between px-6 py-4 border-b border-border">
           <Button
-            variant="ghost"
-            size="sm"
+            ghost
+            size="small"
             onClick={() => setViewMode("home")}
           >
             <ArrowRight className="rotate-180" size={16} />
@@ -338,7 +338,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ initialTab }) => {
 
           <div className="flex items-center justify-center gap-3">
             <Button
-              variant="outline"
+              variant="outlined"
               onClick={() => setViewMode("templates")}
               className="rounded-xl"
             >
@@ -346,7 +346,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ initialTab }) => {
               Browse templates
             </Button>
             <Button
-              variant="outline"
+              variant="outlined"
               onClick={() => setViewMode("recent")}
               className="rounded-xl"
             >
@@ -354,7 +354,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ initialTab }) => {
               Recent projects
             </Button>
             <Button
-              variant="outline"
+              variant="outlined"
               onClick={() => navigate("editor")}
               className="rounded-xl"
             >
@@ -369,14 +369,15 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ initialTab }) => {
             <Switch
               id="skip-welcome"
               checked={skipWelcomeScreen}
-              onCheckedChange={setSkipWelcomeScreen}
+              onChange={setSkipWelcomeScreen}
             />
-            <Label
-              htmlFor="skip-welcome"
-              className="text-xs text-text-muted cursor-pointer"
+            <Typography.Text
+              className="text-xs"
             >
-              Skip on startup
-            </Label>
+              <label htmlFor="skip-welcome"  className=" text-text-muted cursor-pointer">
+                Skip on startup
+              </label>
+            </Typography.Text>
           </div>
 
           <span className="text-text-muted/30">·</span>

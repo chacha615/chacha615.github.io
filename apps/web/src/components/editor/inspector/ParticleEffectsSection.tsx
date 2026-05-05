@@ -19,21 +19,11 @@ import {
 import {
   Button,
   Slider,
-  Label,
   Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
   Input,
-  ScrollArea,
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
+  Collapse,
   Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@openreel/ui";
+} from "antd";
 
 interface ParticleEffectsSectionProps {
   clipId: string;
@@ -123,28 +113,28 @@ export const ParticleEffectsSection: React.FC<ParticleEffectsSectionProps> = ({
   return (
     <div className="space-y-4">
       <div className="flex gap-2">
-        <Select value={selectedPreset} onValueChange={setSelectedPreset}>
-          <SelectTrigger className="flex-1 h-8 text-xs min-w-0 [&>span]:truncate">
-            <SelectValue placeholder="Select effect preset..." />
-          </SelectTrigger>
-          <SelectContent>
-            {Object.entries(groupedPresets).map(([type, presets]) => (
-              <div key={type}>
-                <div className="px-2 py-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">
+        <Select className="flex-1 h-8 text-xs min-w-0 [&>span]:truncate"
+        value={selectedPreset} onChange={setSelectedPreset}
+        placeholder="Select effect preset..."
+        options={Object.entries(groupedPresets).map(([type, presets]) => (
+          {
+            label:(
+              <div className="px-2 py-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">
                   {type}
-                </div>
-                {presets.map((preset) => (
-                  <SelectItem key={preset.id} value={preset.id} textValue={preset.name}>
-                    {preset.name}
-                  </SelectItem>
-                ))}
               </div>
+            ),
+            option:presets.map((preset) => (
+                  {
+                    value: preset.id,
+                    label: preset.name,
+                  }
+                ))
+          }
             ))}
-          </SelectContent>
+        >
         </Select>
         <Button
-          variant="default"
-          size="sm"
+          size="small"
           onClick={handleAddEffect}
           disabled={!selectedPreset}
           className="h-8 px-3"
@@ -161,7 +151,7 @@ export const ParticleEffectsSection: React.FC<ParticleEffectsSectionProps> = ({
           <p className="mt-1 text-[10px]">Select a preset above to add effects</p>
         </div>
       ) : (
-        <ScrollArea className="max-h-[400px]">
+        <div className="max-h-[400px] overflow-auto custom-scrollbar">
           <div className="space-y-2 pr-2">
             {effects.map((effect) => {
               const relativeStartTime = effect.startTime - clipStartTime;
@@ -221,9 +211,9 @@ export const ParticleEffectsSection: React.FC<ParticleEffectsSectionProps> = ({
                     <div className="px-3 pb-3 space-y-3 border-t border-border/50 pt-3">
                       <div className="grid grid-cols-2 gap-3">
                         <div>
-                          <Label className="text-[10px] text-text-muted mb-1">
+                          <label className="text-[10px] text-text-muted mb-1">
                             Start Time (s)
-                          </Label>
+                          </label>
                           <Input
                             type="number"
                             value={relativeStartTime.toFixed(1)}
@@ -240,9 +230,9 @@ export const ParticleEffectsSection: React.FC<ParticleEffectsSectionProps> = ({
                           />
                         </div>
                         <div>
-                          <Label className="text-[10px] text-text-muted mb-1">
+                          <label className="text-[10px] text-text-muted mb-1">
                             Duration (s)
-                          </Label>
+                          </label>
                           <Input
                             type="number"
                             value={effect.duration.toFixed(1)}
@@ -259,19 +249,26 @@ export const ParticleEffectsSection: React.FC<ParticleEffectsSectionProps> = ({
                         </div>
                       </div>
 
-                      <Collapsible>
-                        <CollapsibleTrigger className="flex items-center gap-1 text-[10px] text-text-muted hover:text-text-primary">
-                          <ChevronRight size={10} className="transition-transform data-[state=open]:rotate-90" />
-                          Particle Settings
-                        </CollapsibleTrigger>
-                        <CollapsibleContent className="pt-2 space-y-3">
-                          <div>
-                            <Label className="text-[10px] text-text-muted mb-1">
+                      <Collapse
+                      className="flex items-center gap-1 text-[10px] text-text-muted hover:text-text-primary"
+                      items={[
+                        {
+                          key: "particleSettings",
+                          label:(
+                            <span className="flex items-center gap-1 text-text-muted hover:text-text-primary">
+                               <ChevronRight size={10} />
+                                  Particle Settings
+                             </span>
+                          ),
+                          children:(
+                            <div className="pt-2 space-y-3">
+                              <div>
+                            <label className="text-[10px] text-text-muted mb-1">
                               Particle Count: {effect.config.particleCount}
-                            </Label>
+                            </label>
                             <Slider
-                              value={[effect.config.particleCount]}
-                              onValueChange={([v]) =>
+                              value={effect.config.particleCount}
+                              onChange={(v) =>
                                 handleConfigChange(effect.id, "particleCount", v)
                               }
                               min={10}
@@ -282,12 +279,12 @@ export const ParticleEffectsSection: React.FC<ParticleEffectsSectionProps> = ({
                           </div>
 
                           <div>
-                            <Label className="text-[10px] text-text-muted mb-1">
+                            <label className="text-[10px] text-text-muted mb-1">
                               Speed: {effect.config.speed}
-                            </Label>
+                            </label>
                             <Slider
-                              value={[effect.config.speed]}
-                              onValueChange={([v]) =>
+                              value={effect.config.speed}
+                              onChange={(v) =>
                                 handleConfigChange(effect.id, "speed", v)
                               }
                               min={10}
@@ -298,12 +295,12 @@ export const ParticleEffectsSection: React.FC<ParticleEffectsSectionProps> = ({
                           </div>
 
                           <div>
-                            <Label className="text-[10px] text-text-muted mb-1">
+                            <label className="text-[10px] text-text-muted mb-1">
                               Gravity: {effect.config.gravity}
-                            </Label>
+                            </label>
                             <Slider
-                              value={[effect.config.gravity]}
-                              onValueChange={([v]) =>
+                              value={effect.config.gravity}
+                              onChange={(v) =>
                                 handleConfigChange(effect.id, "gravity", v)
                               }
                               min={-500}
@@ -314,12 +311,12 @@ export const ParticleEffectsSection: React.FC<ParticleEffectsSectionProps> = ({
                           </div>
 
                           <div>
-                            <Label className="text-[10px] text-text-muted mb-1">
+                            <label className="text-[10px] text-text-muted mb-1">
                               Emission Rate: {effect.config.emissionRate}
-                            </Label>
+                            </label>
                             <Slider
-                              value={[effect.config.emissionRate]}
-                              onValueChange={([v]) =>
+                              value={effect.config.emissionRate}
+                              onChange={(v) =>
                                 handleConfigChange(effect.id, "emissionRate", v)
                               }
                               min={1}
@@ -331,12 +328,12 @@ export const ParticleEffectsSection: React.FC<ParticleEffectsSectionProps> = ({
 
                           <div className="grid grid-cols-2 gap-2">
                             <div>
-                              <Label className="text-[10px] text-text-muted mb-1">
+                              <label className="text-[10px] text-text-muted mb-1">
                                 Min Size: {effect.config.size.min}
-                              </Label>
+                              </label>
                               <Slider
-                                value={[effect.config.size.min]}
-                                onValueChange={([v]) =>
+                                value={effect.config.size.min}
+                                onChange={(v) =>
                                   handleConfigChange(effect.id, "size", {
                                     ...effect.config.size,
                                     min: v,
@@ -349,12 +346,12 @@ export const ParticleEffectsSection: React.FC<ParticleEffectsSectionProps> = ({
                               />
                             </div>
                             <div>
-                              <Label className="text-[10px] text-text-muted mb-1">
+                              <label className="text-[10px] text-text-muted mb-1">
                                 Max Size: {effect.config.size.max}
-                              </Label>
+                              </label>
                               <Slider
-                                value={[effect.config.size.max]}
-                                onValueChange={([v]) =>
+                                value={effect.config.size.max}
+                                onChange={(v) =>
                                   handleConfigChange(effect.id, "size", {
                                     ...effect.config.size,
                                     max: v,
@@ -369,12 +366,12 @@ export const ParticleEffectsSection: React.FC<ParticleEffectsSectionProps> = ({
                           </div>
 
                           <div>
-                            <Label className="text-[10px] text-text-muted mb-1">
+                            <label className="text-[10px] text-text-muted mb-1">
                               Turbulence: {effect.config.turbulence}
-                            </Label>
+                            </label>
                             <Slider
-                              value={[effect.config.turbulence]}
-                              onValueChange={([v]) =>
+                              value={effect.config.turbulence}
+                              onChange={(v) =>
                                 handleConfigChange(effect.id, "turbulence", v)
                               }
                               min={0}
@@ -385,36 +382,45 @@ export const ParticleEffectsSection: React.FC<ParticleEffectsSectionProps> = ({
                           </div>
 
                           <div>
-                            <Label className="text-[10px] text-text-muted mb-1">
+                            <label className="text-[10px] text-text-muted mb-1">
                               Blend Mode
-                            </Label>
+                            </label>
                             <Select
+                              className="h-7 text-xs"
                               value={effect.config.blendMode}
-                              onValueChange={(v) =>
+                              onChange={(v) =>
                                 handleConfigChange(effect.id, "blendMode", v)
                               }
+                              options={[
+                          { value: "normal", label: "Normal" },
+                          { value: "add", label: "Additive" },
+                          { value: "multiply", label: "Multiply" },
+                          { value: "screen", label: "Screen" },
+                        ]}
                             >
-                              <SelectTrigger className="h-7 text-xs">
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="normal">Normal</SelectItem>
-                                <SelectItem value="add">Additive</SelectItem>
-                                <SelectItem value="multiply">Multiply</SelectItem>
-                                <SelectItem value="screen">Screen</SelectItem>
-                              </SelectContent>
                             </Select>
                           </div>
-                        </CollapsibleContent>
-                      </Collapsible>
+                            </div>
+                          )
+                        }
+                      ]}
+                      >
+                      </Collapse>
 
-                      <Collapsible>
-                        <CollapsibleTrigger className="flex items-center gap-1 text-[10px] text-text-muted hover:text-text-primary">
-                          <ChevronRight size={10} className="transition-transform data-[state=open]:rotate-90" />
-                          Colors ({effect.config.colors.length})
-                        </CollapsibleTrigger>
-                        <CollapsibleContent className="pt-2">
-                          <div className="flex flex-wrap gap-1">
+                      <Collapse className="flex items-center gap-1 text-[10px] text-text-muted hover:text-text-primary"
+                      items={
+                        [
+                          {
+                            key:'colors',
+                            label:(
+                              <span className="flex items-center gap-1 text-text-muted hover:text-text-primary">
+                                 <ChevronRight size={10} />
+                                 Colors ({effect.config.colors.length})
+                             </span>
+                            ),
+                            children:(
+                              <div className="pt-2">
+                                 <div className="flex flex-wrap gap-1">
                             {effect.config.colors.map((color, idx) => (
                               <ColorSwatch
                                 key={idx}
@@ -444,15 +450,20 @@ export const ParticleEffectsSection: React.FC<ParticleEffectsSectionProps> = ({
                               <Plus size={12} />
                             </button>
                           </div>
-                        </CollapsibleContent>
-                      </Collapsible>
+                              </div>
+                            )
+                          }
+                        ]
+                      }
+                      >
+                      </Collapse>
                     </div>
                   )}
                 </div>
               );
             })}
           </div>
-        </ScrollArea>
+        </div>
       )}
     </div>
   );
@@ -469,14 +480,10 @@ const ColorSwatch: React.FC<ColorSwatchProps> = ({ color, onChange, onRemove }) 
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <Popover open={isOpen} onOpenChange={setIsOpen}>
-      <PopoverTrigger asChild>
-        <button
-          className="w-6 h-6 rounded border border-border cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all"
-          style={{ backgroundColor: color }}
-        />
-      </PopoverTrigger>
-      <PopoverContent side="top" align="start" className="w-auto p-2">
+    <Popover open={isOpen} onOpenChange={setIsOpen}
+    placement="topLeft"
+    content={
+      <div className="w-auto p-2">
         <div className="space-y-2">
           <input
             ref={inputRef}
@@ -512,7 +519,13 @@ const ColorSwatch: React.FC<ColorSwatchProps> = ({ color, onChange, onRemove }) 
             )}
           </div>
         </div>
-      </PopoverContent>
+      </div>
+    }
+    >
+      <button
+    className="w-6 h-6 rounded border border-border cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all"
+    style={{ backgroundColor: color }}
+  />
     </Popover>
   );
 };

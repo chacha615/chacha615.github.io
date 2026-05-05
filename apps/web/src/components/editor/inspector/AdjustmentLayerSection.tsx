@@ -11,7 +11,7 @@ import {
   Droplet,
   Copy,
 } from "lucide-react";
-import { Slider } from "@openreel/ui";
+import { Slider } from 'antd';
 import { useEngineStore } from "../../../stores/engine-store";
 import { useProjectStore } from "../../../stores/project-store";
 import type { AdjustmentLayer, BlendMode, Effect } from "@openreel/core";
@@ -308,12 +308,13 @@ export const AdjustmentLayerSection: React.FC<AdjustmentLayerSectionProps> = ({
                 </span>
               </div>
               <Slider
+                range={false}
                 min={0}
                 max={100}
                 step={1}
-                value={[layer.opacity * 100]}
-                onValueChange={(value) =>
-                  handleOpacityChange(layer.id, value[0] / 100)
+                value={layer.opacity * 100}
+                onChange={(value) =>
+                  handleOpacityChange(layer.id, value / 100)
                 }
               />
             </div>

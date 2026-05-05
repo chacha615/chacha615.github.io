@@ -1,6 +1,6 @@
 import * as React from "react"
-import * as TogglePrimitive from "@radix-ui/react-toggle"
-import { cva, type VariantProps } from "class-variance-authority"
+import { Switch, SwitchProps } from "antd"
+import { cva, type VariantProps as CVAVariantProps } from "class-variance-authority"
 
 import { cn } from "@openreel/ui/lib/utils"
 
@@ -26,18 +26,51 @@ const toggleVariants = cva(
   }
 )
 
-const Toggle = React.forwardRef<
-  React.ElementRef<typeof TogglePrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof TogglePrimitive.Root> &
-    VariantProps<typeof toggleVariants>
->(({ className, variant, size, ...props }, ref) => (
-  <TogglePrimitive.Root
-    ref={ref}
-    className={cn(toggleVariants({ variant, size, className }))}
-    {...props}
-  />
-))
+type ToggleVariants = CVAVariantProps<typeof toggleVariants>
 
-Toggle.displayName = TogglePrimitive.Root.displayName
+interface ToggleProps extends Omit<SwitchProps, "checked" | "onChange" | "size"> {
+  defaultPressed?: boolean
+  pressed?: boolean
+  onPressedChange?: (pressed: boolean) => void
+  variant?: ToggleVariants["variant"]
+  size?: ToggleVariants["size"]
+}
+
+const Toggle = React.forwardRef<
+  React.ElementRef<typeof Switch>,
+  ToggleProps
+>(({ className, variant = "default", size = "default", defaultPressed, pressed, onPressedChange, disabled, ...props }, ref) => {
+  const [internalPressed, setInternalPressed] = React.useState(defaultPressed ?? false)
+  const isControlled = pressed !== undefined
+  const isPressed = isControlled ? pressed : internalPressed
+
+  const handleChange = React.useCallback((checked: boolean) => {
+    if (!isControlled) {
+      setInternalPressed(checked)
+    }
+    onPressedChange?.(checked)
+  }, [isControlled, onPressedChange])
+
+  const switchClassName = cn(
+    toggleVariants({ variant, size, className }),
+    isPressed && "bg-accent text-accent-foreground",
+    !isPressed && variant === "outline" && "border border-input bg-transparent",
+    !isPressed && variant !== "outline" && "bg-transparent",
+    disabled && "opacity-50 pointer-events-none"
+  )
+
+  return (
+    <Switch
+      ref={ref}
+      checked={isPressed}
+      onChange={handleChange}
+      disabled={disabled}
+      className={switchClassName}
+      {...props}
+    />
+  )
+})
+
+Toggle.displayName = "Toggle"
 
 export { Toggle, toggleVariants }

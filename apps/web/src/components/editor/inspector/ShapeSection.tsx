@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { useProjectStore } from "../../../stores/project-store";
 import type { ShapeStyle, FillStyle, StrokeStyle } from "@openreel/core";
-import { LabeledSlider as Slider } from "@openreel/ui";
+import { Slider } from "antd";
 
 const ColorPicker: React.FC<{
   label: string;
@@ -190,22 +190,28 @@ export const ShapeSection: React.FC<ShapeSectionProps> = ({ clipId }) => {
             })
           }
         />
+        <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Opacity</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {Math.round((style.fill?.opacity || 1) * 100)}
+            %
+          </span>
+        </div>
         <Slider
-          label="Opacity"
           value={(style.fill?.opacity || 1) * 100}
-          onChange={(opacity) =>
-            handleStyleChange({
+          onChange={(values) => handleStyleChange({
               fill: {
                 ...style.fill,
-                opacity: opacity / 100,
+                opacity: values / 100,
                 type: style.fill?.type || "solid",
               },
-            })
-          }
+            })}
           min={0}
           max={100}
-          unit="%"
+          className="h-1.5"
         />
+      </div>
       </div>
 
       <div className="space-y-2 p-3 bg-background-tertiary rounded-lg">
@@ -264,14 +270,22 @@ export const ShapeSection: React.FC<ShapeSectionProps> = ({ clipId }) => {
           <span className="text-[10px] text-text-secondary font-medium">
             Corners
           </span>
-          <Slider
-            label="Radius"
-            value={style.cornerRadius || 0}
-            onChange={(cornerRadius) => handleStyleChange({ cornerRadius })}
-            min={0}
-            max={100}
-            unit="px"
-          />
+          <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Radius</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {Math.round(style.cornerRadius || 0)}
+            px
+          </span>
+        </div>
+        <Slider
+          value={style.cornerRadius || 0}
+          onChange={(values) => handleStyleChange({ cornerRadius: values })}
+          min={0}
+          max={100}
+          className="h-1.5"
+        />
+      </div>
         </div>
       )}
 
@@ -327,23 +341,29 @@ export const ShapeSection: React.FC<ShapeSectionProps> = ({ clipId }) => {
           max={50}
           unit="px"
         />
+        <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Blur</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {Math.round(style.shadow?.blur || 0)}
+            px
+          </span>
+        </div>
         <Slider
-          label="Blur"
           value={style.shadow?.blur || 0}
-          onChange={(blur) =>
-            handleStyleChange({
+          onChange={(values) => handleStyleChange({
               shadow: {
-                blur,
+                blur: values,
                 color: style.shadow?.color || "#000000",
                 offsetX: style.shadow?.offsetX || 0,
                 offsetY: style.shadow?.offsetY || 0,
               },
-            })
-          }
+            })}
           min={0}
           max={50}
-          unit="px"
+          className="h-1.5"
         />
+      </div>
       </div>
     </div>
   );

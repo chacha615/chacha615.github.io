@@ -3,13 +3,9 @@ import { Type, Clock, Play } from "lucide-react";
 import { useProjectStore } from "../../../stores/project-store";
 import type { TextAnimationPreset, TextAnimationParams } from "@openreel/core";
 import {
-  LabeledSlider,
+  Slider,
   Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@openreel/ui";
+} from "antd";
 
 interface PresetInfo {
   value: TextAnimationPreset;
@@ -66,7 +62,6 @@ const ANIMATION_PRESETS: PresetInfo[] = [
   },
 ];
 
-const Slider = LabeledSlider;
 
 const PresetSelector: React.FC<{
   value: TextAnimationPreset;
@@ -74,17 +69,13 @@ const PresetSelector: React.FC<{
 }> = ({ value, onChange }) => (
   <div className="space-y-2">
     <span className="text-[10px] text-text-secondary">Animation Preset</span>
-    <Select value={value} onValueChange={(v) => onChange(v as TextAnimationPreset)}>
-      <SelectTrigger className="w-full bg-background-tertiary border-border text-text-primary">
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent className="bg-background-secondary border-border max-h-60">
-        {ANIMATION_PRESETS.map((preset) => (
-          <SelectItem key={preset.value} value={preset.value}>
-            {preset.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
+    <Select className="w-full bg-background-tertiary border-border text-text-primary"
+    value={value} onChange={(v) => onChange(v as TextAnimationPreset)}
+    options={ANIMATION_PRESETS.map((preset) => ({
+      value: preset.value,
+      label: preset.label,
+    }))}
+    >
     </Select>
     <p className="text-[9px] text-text-muted">
       {ANIMATION_PRESETS.find((p) => p.value === value)?.description}
@@ -106,17 +97,13 @@ const EasingSelector: React.FC<{
   return (
     <div className="space-y-1">
       <span className="text-[10px] text-text-secondary">Easing</span>
-      <Select value={value} onValueChange={onChange}>
-        <SelectTrigger className="w-full bg-background-tertiary border-border text-text-primary text-[10px]">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent className="bg-background-secondary border-border">
-          {easingOptions.map((option) => (
-            <SelectItem key={option.value} value={option.value}>
-              {option.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
+      <Select className="w-full bg-background-tertiary border-border text-text-primary text-[10px]"
+      value={value} onChange={onChange}
+      options={easingOptions.map((option) => ({
+        value: option.value,
+        label: option.label,
+      }))}
+      >
       </Select>
     </div>
   );
@@ -206,27 +193,41 @@ export const TextAnimationSection: React.FC<TextAnimationSectionProps> = ({
               </span>
             </div>
 
-            <Slider
-              label="In Duration"
-              value={inDuration}
-              onChange={handleInDurationChange}
-              min={0}
-              max={5}
-              step={0.1}
-              unit="s"
-            />
-
-            <Slider
-              label="Out Duration"
-              value={outDuration}
-              onChange={handleOutDurationChange}
-              min={0}
-              max={5}
-              step={0.1}
-              unit="s"
-            />
+            <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">In Duration</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {inDuration.toFixed(1)}
+            s
+          </span>
+        </div>
+        <Slider
+          value={inDuration}
+          onChange={(values) => handleInDurationChange(values)}
+          min={0}
+          max={5}
+          step={0.1}
+          className="h-1.5"
+        />
+      </div>
+             <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Out Duration</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {outDuration.toFixed(1)}
+            s
+          </span>
+        </div>
+        <Slider
+          value={outDuration}
+          onChange={(values) => handleOutDurationChange(values)}
+          min={0}
+          max={5}
+          step={0.1}
+          className="h-1.5"
+        />
+        </div>
           </div>
-
           <div className="p-3 bg-background-tertiary rounded-lg">
             <EasingSelector value={easing} onChange={handleEasingChange} />
           </div>
@@ -314,24 +315,38 @@ const FadeParams: React.FC<{
       <span className="text-[10px] text-text-secondary font-medium">
         Fade Settings
       </span>
-      <Slider
-        label="Start Opacity"
-        value={startOpacity}
-        onChange={(v) => handleChange(v, endOpacity)}
-        min={0}
-        max={1}
-        step={0.1}
-        unit=""
-      />
-      <Slider
-        label="End Opacity"
-        value={endOpacity}
-        onChange={(v) => handleChange(startOpacity, v)}
-        min={0}
-        max={1}
-        step={0.1}
-        unit=""
-      />
+      <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Start Opacity</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {startOpacity.toFixed(1)}
+          </span>
+        </div>
+        <Slider
+          value={startOpacity}
+          onChange={(values) => handleChange(values, endOpacity)}
+          min={0}
+          max={1}
+          step={0.1}
+          className="h-1.5"
+        />
+      </div>
+      <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">End Opacity</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {endOpacity.toFixed(1)}
+          </span>
+        </div>
+        <Slider
+          value={endOpacity}
+          onChange={(values) => handleChange(startOpacity, values)}
+          min={0}
+          max={1}
+          step={0.1}
+          className="h-1.5"
+        />
+      </div>
     </div>
   );
 };
@@ -361,15 +376,22 @@ const SlideParams: React.FC<{
       <span className="text-[10px] text-text-secondary font-medium">
         Slide Settings
       </span>
-      <Slider
-        label="Distance"
-        value={slideDistance}
-        onChange={handleChange}
-        min={0.05}
-        max={1}
-        step={0.05}
-        unit=""
-      />
+      <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Distance</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            { slideDistance.toFixed(1)}
+          </span>
+        </div>
+        <Slider
+          value={slideDistance}
+          onChange={(values) => handleChange(values)}
+          min={0.05}
+          max={1}
+          step={0.05}
+          className="h-1.5"
+        />
+      </div>
     </div>
   );
 };
@@ -400,24 +422,38 @@ const ScaleParams: React.FC<{
       <span className="text-[10px] text-text-secondary font-medium">
         Scale Settings
       </span>
-      <Slider
-        label="Scale From"
-        value={scaleFrom}
-        onChange={(v) => handleChange(v, scaleTo)}
-        min={0}
-        max={2}
-        step={0.1}
-        unit="x"
-      />
-      <Slider
-        label="Scale To"
-        value={scaleTo}
-        onChange={(v) => handleChange(scaleFrom, v)}
-        min={0}
-        max={2}
-        step={0.1}
-        unit="x"
-      />
+      <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Scale From</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {scaleFrom.toFixed(1)}x
+          </span>
+        </div>
+        <Slider
+          value={scaleFrom}
+          onChange={(values) => handleChange(values, scaleTo)}
+          min={0}
+          max={2}
+          step={0.1}
+          className="h-1.5"
+        />
+      </div>
+      <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Scale To</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {scaleTo.toFixed(1)}x
+          </span>
+        </div>
+        <Slider
+          value={scaleTo}
+          onChange={(values) => handleChange(scaleFrom, values)}
+          min={0}
+          max={2}
+          step={0.1}
+          className="h-1.5"
+        />
+      </div>
     </div>
   );
 };
@@ -448,24 +484,38 @@ const BounceParams: React.FC<{
       <span className="text-[10px] text-text-secondary font-medium">
         Bounce Settings
       </span>
-      <Slider
-        label="Height"
-        value={bounceHeight}
-        onChange={(v) => handleChange(v, bounceCount)}
-        min={0.01}
-        max={0.5}
-        step={0.01}
-        unit=""
-      />
-      <Slider
-        label="Bounces"
-        value={bounceCount}
-        onChange={(v) => handleChange(bounceHeight, Math.round(v))}
-        min={1}
-        max={10}
-        step={1}
-        unit=""
-      />
+      <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Height</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {bounceHeight.toFixed(2)}
+          </span>
+        </div>
+        <Slider
+          value={bounceHeight}
+          onChange={(values) => handleChange(values, bounceCount)}
+          min={0.01}
+          max={0.5}
+          step={0.01}
+          className="h-1.5"
+        />
+      </div>
+      <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Bounces</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {Math.round(bounceCount)}
+          </span>
+        </div>
+        <Slider
+          value={bounceCount}
+          onChange={(values) => handleChange(bounceHeight, Math.round(values))}
+          min={1}
+          max={10}
+          step={1}
+          className="h-1.5"
+        />
+      </div>
     </div>
   );
 };
@@ -495,15 +545,22 @@ const RotateParams: React.FC<{
       <span className="text-[10px] text-text-secondary font-medium">
         Rotate Settings
       </span>
-      <Slider
-        label="Angle"
-        value={rotateAngle}
-        onChange={handleChange}
-        min={-720}
-        max={720}
-        step={15}
-        unit="°"
-      />
+      <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Angle</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {rotateAngle}°
+          </span>
+        </div>
+        <Slider
+          value={rotateAngle}
+          onChange={handleChange}
+          min={-720}
+          max={720}
+          step={15}
+          className="h-1.5"
+        />
+      </div>
     </div>
   );
 };
@@ -534,24 +591,38 @@ const WaveParams: React.FC<{
       <span className="text-[10px] text-text-secondary font-medium">
         Wave Settings
       </span>
-      <Slider
-        label="Amplitude"
-        value={waveAmplitude}
-        onChange={(v) => handleChange(v, waveFrequency)}
-        min={0.005}
-        max={0.1}
-        step={0.005}
-        unit=""
-      />
-      <Slider
-        label="Frequency"
-        value={waveFrequency}
-        onChange={(v) => handleChange(waveAmplitude, v)}
-        min={0.5}
-        max={5}
-        step={0.5}
-        unit=""
-      />
+      <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Amplitude</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {waveAmplitude.toFixed(3)}
+          </span>
+        </div>
+        <Slider
+          value={waveAmplitude}
+          onChange={(values) => handleChange(values, waveFrequency)}
+          min={0.005}
+          max={0.1}
+          step={0.005}
+          className="h-1.5"
+        />
+      </div>
+      <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Frequency</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {waveFrequency}
+          </span>
+        </div>
+        <Slider
+          value={waveFrequency}
+          onChange={(values) => handleChange(waveAmplitude, values)}
+          min={0.5}
+          max={5}
+          step={0.5}
+          className="h-1.5"
+        />
+      </div>
     </div>
   );
 };
@@ -582,24 +653,38 @@ const ShakeParams: React.FC<{
       <span className="text-[10px] text-text-secondary font-medium">
         Shake Settings
       </span>
-      <Slider
-        label="Intensity"
-        value={shakeIntensity}
-        onChange={(v) => handleChange(v, shakeSpeed)}
-        min={0.001}
-        max={0.05}
-        step={0.001}
-        unit=""
-      />
-      <Slider
-        label="Speed"
-        value={shakeSpeed}
-        onChange={(v) => handleChange(shakeIntensity, v)}
-        min={5}
-        max={50}
-        step={5}
-        unit=""
-      />
+      <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Intensity</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {shakeIntensity.toFixed(3)}
+          </span>
+        </div>
+        <Slider
+          value={shakeIntensity}
+          onChange={(values) => handleChange(values, shakeSpeed)}
+          min={0.001}
+          max={0.05}
+          step={0.001}
+          className="h-1.5"
+        />
+      </div>
+      <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Speed</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {shakeSpeed}
+          </span>
+        </div>
+        <Slider
+          value={shakeSpeed}
+          onChange={(values) => handleChange(shakeIntensity, values)}
+          min={5}
+          max={50}
+          step={5}
+          className="h-1.5"
+        />
+      </div>
     </div>
   );
 };
@@ -629,15 +714,22 @@ const PopParams: React.FC<{
       <span className="text-[10px] text-text-secondary font-medium">
         Pop Settings
       </span>
-      <Slider
-        label="Overshoot"
-        value={popOvershoot}
-        onChange={handleChange}
-        min={1}
-        max={2}
-        step={0.05}
-        unit="x"
-      />
+      <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Overshoot</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {popOvershoot.toFixed(2)}x
+          </span>
+        </div>
+        <Slider
+          value={popOvershoot}
+          onChange={handleChange}
+          min={1}
+          max={2}
+          step={0.05}
+          className="h-1.5"
+        />
+      </div>
     </div>
   );
 };
@@ -668,24 +760,38 @@ const GlitchParams: React.FC<{
       <span className="text-[10px] text-text-secondary font-medium">
         Glitch Settings
       </span>
-      <Slider
-        label="Intensity"
-        value={glitchIntensity}
-        onChange={(v) => handleChange(v, glitchSpeed)}
-        min={0.005}
-        max={0.1}
-        step={0.005}
-        unit=""
-      />
-      <Slider
-        label="Speed"
-        value={glitchSpeed}
-        onChange={(v) => handleChange(glitchIntensity, v)}
-        min={1}
-        max={30}
-        step={1}
-        unit=""
-      />
+      <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Intensity</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {glitchIntensity.toFixed(3)}
+          </span>
+        </div>
+        <Slider
+          value={glitchIntensity}
+          onChange={(values) => handleChange(values, glitchSpeed)}
+          min={0.005}
+          max={0.1}
+          step={0.005}
+          className="h-1.5"
+        />
+      </div>
+      <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-text-secondary">Speed</span>
+          <span className="text-[10px] font-mono text-text-primary bg-background-tertiary px-1.5 py-0.5 rounded border border-border">
+            {glitchSpeed}
+          </span>
+        </div>
+        <Slider
+          value={glitchSpeed}
+          onChange={(values) => handleChange(glitchIntensity, values)}
+          min={1}
+          max={30}
+          step={1}
+          className="h-1.5"
+        />
+      </div>
     </div>
   );
 };

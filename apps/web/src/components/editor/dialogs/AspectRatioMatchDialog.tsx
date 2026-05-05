@@ -1,14 +1,6 @@
 import React from "react";
 import { Maximize2 } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  Button,
-} from "@openreel/ui";
-
+import { Modal ,Button} from 'antd';
 interface AspectRatioMatchDialogProps {
   isOpen: boolean;
   videoWidth: number;
@@ -32,21 +24,18 @@ export const AspectRatioMatchDialog: React.FC<AspectRatioMatchDialogProps> = ({
   const currentAspect = (currentWidth / currentHeight).toFixed(2);
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onCancel()}>
-      <DialogContent className="max-w-md">
-        <DialogHeader>
-          <div className="flex items-center gap-3">
+    <Modal open={isOpen} onCancel={(open) => !open && onCancel()}  className="max-w-md">
+          <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
               <Maximize2 size={20} className="text-primary" />
             </div>
             <div>
-              <DialogTitle>Match Video Dimensions?</DialogTitle>
-              <DialogDescription className="mt-1">
+              <h2 className="text-lg font-semibold leading-none tracking-tight">Match Video Dimensions?</h2>
+              <div className="text-sm text-muted-foreground mt-1">
                 The video you're adding has different dimensions than your current project settings.
-              </DialogDescription>
+              </div>
             </div>
           </div>
-        </DialogHeader>
 
         <div className="space-y-4 py-4">
           <div className="space-y-3">
@@ -86,14 +75,13 @@ export const AspectRatioMatchDialog: React.FC<AspectRatioMatchDialogProps> = ({
         </div>
 
         <div className="flex gap-3">
-          <Button variant="outline" className="flex-1" onClick={onCancel}>
+          <Button variant="outlined" className="flex-1" onClick={onCancel}>
             Keep Current
           </Button>
           <Button className="flex-1" onClick={onConfirm}>
             Match Video
           </Button>
         </div>
-      </DialogContent>
-    </Dialog>
+    </Modal>
   );
 };

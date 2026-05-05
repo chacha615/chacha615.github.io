@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { Scissors, Search, Loader2, Volume2 } from "lucide-react";
-import { Slider } from "@openreel/ui";
+import { Slider } from "antd";
 import { useProjectStore } from "../../../stores/project-store";
 import {
   getSilenceCutBridge,
@@ -129,8 +129,8 @@ export const AutoCutSilenceSection: React.FC<AutoCutSilenceSectionProps> = ({
             min={-80}
             max={-20}
             step={1}
-            value={[settings.threshold]}
-            onValueChange={(value) => updateSettings({ threshold: value[0] })}
+            value={settings.threshold}
+            onChange={(value) => updateSettings({ threshold: value })}
           />
           <p className="text-[8px] text-text-muted mt-1">
             Lower values detect more silence
@@ -150,9 +150,9 @@ export const AutoCutSilenceSection: React.FC<AutoCutSilenceSectionProps> = ({
             min={0.1}
             max={2.0}
             step={0.1}
-            value={[settings.minSilenceDuration]}
-            onValueChange={(value) =>
-              updateSettings({ minSilenceDuration: value[0] })
+            value={settings.minSilenceDuration}
+            onChange={(value) =>
+              updateSettings({ minSilenceDuration: value })
             }
           />
           <p className="text-[8px] text-text-muted mt-1">
@@ -174,9 +174,9 @@ export const AutoCutSilenceSection: React.FC<AutoCutSilenceSectionProps> = ({
               min={0}
               max={2}
               step={0.05}
-              value={[settings.paddingBefore]}
-              onValueChange={(value) =>
-                updateSettings({ paddingBefore: value[0] })
+              value={settings.paddingBefore}
+              onChange={(value) =>
+                updateSettings({ paddingBefore: value })
               }
             />
           </div>
@@ -193,9 +193,9 @@ export const AutoCutSilenceSection: React.FC<AutoCutSilenceSectionProps> = ({
               min={0}
               max={2}
               step={0.05}
-              value={[settings.paddingAfter]}
-              onValueChange={(value) =>
-                updateSettings({ paddingAfter: value[0] })
+              value={settings.paddingAfter}
+              onChange={(value) =>
+                updateSettings({ paddingAfter: value })
               }
             />
           </div>

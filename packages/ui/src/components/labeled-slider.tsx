@@ -1,3 +1,4 @@
+// ...existing code...
 import * as React from "react"
 import { Slider } from "./slider"
 import { cn } from "@openreel/ui/lib/utils"
@@ -27,8 +28,13 @@ const LabeledSlider = React.forwardRef<HTMLDivElement, LabeledSliderProps>(
           </span>
         </div>
         <Slider
+          // 保持原有行为：以数组方式传入以确保 Slider 在封装时识别为 range（若需单值可改为 value={value}）
           value={[value]}
-          onValueChange={(values) => onChange(values[0])}
+          onValueChange={(values) => {
+            // 兼容 antd/封装返回 number | number[]
+            const v = Array.isArray(values) ? values[0] : values
+            onChange(Number(v))
+          }}
           min={min}
           max={max}
           step={step}
@@ -55,7 +61,10 @@ const InspectorSlider = React.forwardRef<HTMLDivElement, InspectorSliderProps>(
       <div ref={ref} className={cn("flex items-center gap-3", className)}>
         <Slider
           value={[value]}
-          onValueChange={(values) => onChange(values[0])}
+          onValueChange={(values) => {
+            const v = Array.isArray(values) ? values[0] : values
+            onChange(Number(v))
+          }}
           min={min}
           max={max}
           step={step}
@@ -71,3 +80,4 @@ const InspectorSlider = React.forwardRef<HTMLDivElement, InspectorSliderProps>(
 InspectorSlider.displayName = "InspectorSlider"
 
 export { LabeledSlider, InspectorSlider }
+//

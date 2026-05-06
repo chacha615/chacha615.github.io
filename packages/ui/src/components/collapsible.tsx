@@ -101,9 +101,28 @@ const Collapsible = React.forwardRef<HTMLDivElement, CollapsibleProps>(
 )
 Collapsible.displayName = "Collapsible"
 
-const CollapsibleTrigger = React.forwardRef<HTMLButtonElement, React.HTMLAttributes<HTMLButtonElement>>(
-  ({ children, className, ...props }, ref) => {
+interface CollapsibleTriggerProps extends React.HTMLAttributes<HTMLButtonElement> {
+  asChild?: boolean
+}
+
+const CollapsibleTrigger = React.forwardRef<HTMLButtonElement, CollapsibleTriggerProps>(
+  ({ children, className, asChild = false, ...props }, ref) => {
     const { open, toggle } = React.useContext(CollapsibleContext)
+
+    const handleClick = (e: React.MouseEvent) => {
+      e.preventDefault()
+      toggle()
+    }
+
+    if (asChild) {
+      return React.cloneElement(children as React.ReactElement, {
+        onClick: (e: React.MouseEvent) => {
+          (children as React.ReactElement).props?.onClick?.(e)
+          handleClick(e)
+        },
+        'aria-expanded': open,
+      })
+    }
 
     // 触发器保留原始渲染结构/类名，只负责展示 children，并在点击时触发 toggle（以保持行为一致）
     return (
@@ -111,10 +130,7 @@ const CollapsibleTrigger = React.forwardRef<HTMLButtonElement, React.HTMLAttribu
         ref={ref}
         type="button"
         aria-expanded={open}
-        onClick={(e) => {
-          e.preventDefault()
-          toggle()
-        }}
+        onClick={handleClick}
         className={cn("flex items-center gap-2", className)}
         {...props}
       >

@@ -120,7 +120,7 @@ export function EffectsSection({ layer }: Props) {
               </div>
               <Slider
                 value={[layer.shadow.blur]}
-                onValueChange={([blur]) => handleShadowChange({ blur })}
+                onValueChange={(blur) => handleShadowChange({ blur: Array.isArray(blur) ? blur[0] : blur })}
                 min={0}
                 max={100}
                 step={1}
@@ -136,7 +136,7 @@ export function EffectsSection({ layer }: Props) {
                 </div>
                 <Slider
                   value={[layer.shadow.offsetX]}
-                  onValueChange={([offsetX]) => handleShadowChange({ offsetX })}
+                  onValueChange={(offsetX) => handleShadowChange({ offsetX: Array.isArray(offsetX) ? offsetX[0] : offsetX })}
                   min={-50}
                   max={50}
                   step={1}
@@ -150,7 +150,7 @@ export function EffectsSection({ layer }: Props) {
                 </div>
                 <Slider
                   value={[layer.shadow.offsetY]}
-                  onValueChange={([offsetY]) => handleShadowChange({ offsetY })}
+                  onValueChange={(offsetY) => handleShadowChange({ offsetY: Array.isArray(offsetY) ? offsetY[0] : offsetY })}
                   min={-50}
                   max={50}
                   step={1}
@@ -200,7 +200,7 @@ export function EffectsSection({ layer }: Props) {
               </div>
               <Slider
                 value={[layer.innerShadow?.blur ?? 10]}
-                onValueChange={([blur]) => handleInnerShadowChange({ blur })}
+                onValueChange={(blur) => handleInnerShadowChange({ blur: Array.isArray(blur) ? blur[0] : blur })}
                 min={0}
                 max={50}
                 step={1}
@@ -216,7 +216,7 @@ export function EffectsSection({ layer }: Props) {
                 </div>
                 <Slider
                   value={[layer.innerShadow?.offsetX ?? 2]}
-                  onValueChange={([offsetX]) => handleInnerShadowChange({ offsetX })}
+                  onValueChange={(offsetX) => handleInnerShadowChange({ offsetX: Array.isArray(offsetX) ? offsetX[0] : offsetX })}
                   min={-30}
                   max={30}
                   step={1}
@@ -230,7 +230,7 @@ export function EffectsSection({ layer }: Props) {
                 </div>
                 <Slider
                   value={[layer.innerShadow?.offsetY ?? 2]}
-                  onValueChange={([offsetY]) => handleInnerShadowChange({ offsetY })}
+                  onValueChange={(offsetY) => handleInnerShadowChange({ offsetY: Array.isArray(offsetY) ? offsetY[0] : offsetY })}
                   min={-30}
                   max={30}
                   step={1}
@@ -280,7 +280,7 @@ export function EffectsSection({ layer }: Props) {
               </div>
               <Slider
                 value={[layer.stroke.width]}
-                onValueChange={([width]) => handleStrokeChange({ width })}
+                onValueChange={(width) => handleStrokeChange({ width: Array.isArray(width) ? width[0] : width })}
                 min={1}
                 max={20}
                 step={1}
@@ -349,7 +349,7 @@ export function EffectsSection({ layer }: Props) {
               </div>
               <Slider
                 value={[layer.glow.blur]}
-                onValueChange={([blur]) => handleGlowChange({ blur })}
+                onValueChange={(blur) => handleGlowChange({ blur: Array.isArray(blur) ? blur[0] : blur })}
                 min={0}
                 max={100}
                 step={1}
@@ -364,7 +364,7 @@ export function EffectsSection({ layer }: Props) {
               </div>
               <Slider
                 value={[layer.glow.intensity]}
-                onValueChange={([intensity]) => handleGlowChange({ intensity })}
+                onValueChange={(intensity) => handleGlowChange({ intensity: Array.isArray(intensity) ? intensity[0] : intensity })}
                 min={0}
                 max={2}
                 step={0.1}

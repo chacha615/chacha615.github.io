@@ -418,7 +418,7 @@ export function TextSection({ layer }: Props) {
               </div>
               <Slider
                 value={[layer.style.strokeWidth ?? 0]}
-                onValueChange={([width]) => handleStyleChange({ strokeWidth: width })}
+                onValueChange={(width) => handleStyleChange({ strokeWidth: Array.isArray(width) ? width[0] : width })}
                 min={0}
                 max={10}
                 step={0.5}
@@ -466,7 +466,7 @@ export function TextSection({ layer }: Props) {
                 </div>
                 <Slider
                   value={[layer.style.backgroundPadding ?? 8]}
-                  onValueChange={([padding]) => handleStyleChange({ backgroundPadding: padding })}
+                  onValueChange={(padding) => handleStyleChange({ backgroundPadding: Array.isArray(padding) ? padding[0] : padding })}
                   min={0}
                   max={32}
                   step={1}
@@ -479,7 +479,7 @@ export function TextSection({ layer }: Props) {
                 </div>
                 <Slider
                   value={[layer.style.backgroundRadius ?? 4]}
-                  onValueChange={([radius]) => handleStyleChange({ backgroundRadius: radius })}
+                  onValueChange={(radius) => handleStyleChange({ backgroundRadius: Array.isArray(radius) ? radius[0] : radius })}
                   min={0}
                   max={32}
                   step={1}
@@ -540,9 +540,9 @@ export function TextSection({ layer }: Props) {
               </div>
               <Slider
                 value={[layer.style.textShadow?.blur ?? 4]}
-                onValueChange={([blur]) =>
+                onValueChange={(blur) =>
                   handleStyleChange({
-                    textShadow: { ...(layer.style.textShadow ?? { enabled: true, color: 'rgba(0, 0, 0, 0.5)', blur: 4, offsetX: 0, offsetY: 2 }), blur },
+                    textShadow: { ...(layer.style.textShadow ?? { enabled: true, color: 'rgba(0, 0, 0, 0.5)', blur: 4, offsetX: 0, offsetY: 2 }), blur: Array.isArray(blur) ? blur[0] : blur },
                   })
                 }
                 min={0}
@@ -559,9 +559,9 @@ export function TextSection({ layer }: Props) {
                 </div>
                 <Slider
                   value={[layer.style.textShadow?.offsetX ?? 0]}
-                  onValueChange={([offsetX]) =>
+                  onValueChange={(offsetX) =>
                     handleStyleChange({
-                      textShadow: { ...(layer.style.textShadow ?? { enabled: true, color: 'rgba(0, 0, 0, 0.5)', blur: 4, offsetX: 0, offsetY: 2 }), offsetX },
+                      textShadow: { ...(layer.style.textShadow ?? { enabled: true, color: 'rgba(0, 0, 0, 0.5)', blur: 4, offsetX: 0, offsetY: 2 }), offsetX: Array.isArray(offsetX) ? offsetX[0] : offsetX },
                     })
                   }
                   min={-30}
@@ -576,9 +576,9 @@ export function TextSection({ layer }: Props) {
                 </div>
                 <Slider
                   value={[layer.style.textShadow?.offsetY ?? 2]}
-                  onValueChange={([offsetY]) =>
+                  onValueChange={(offsetY) =>
                     handleStyleChange({
-                      textShadow: { ...(layer.style.textShadow ?? { enabled: true, color: 'rgba(0, 0, 0, 0.5)', blur: 4, offsetX: 0, offsetY: 2 }), offsetY },
+                      textShadow: { ...(layer.style.textShadow ?? { enabled: true, color: 'rgba(0, 0, 0, 0.5)', blur: 4, offsetX: 0, offsetY: 2 }), offsetY: Array.isArray(offsetY) ? offsetY[0] : offsetY },
                     })
                   }
                   min={-30}

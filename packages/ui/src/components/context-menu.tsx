@@ -181,6 +181,7 @@ ContextMenuItem.displayName = "ContextMenuItem"
 interface ContextMenuCheckboxItemProps extends React.HTMLAttributes<HTMLDivElement> {
   checked?: boolean
   children?: React.ReactNode
+  onCheckedChange?: (checked: boolean) => void
 }
 
 const ContextMenuCheckboxItem = React.forwardRef<

@@ -152,7 +152,7 @@ export function GradientPicker({ value, onChange }: GradientPickerProps) {
           </div>
           <Slider
             value={[gradient.angle]}
-            onValueChange={([angle]) => handleAngleChange(angle)}
+            onValueChange={(angle) => handleAngleChange(Array.isArray(angle) ? angle[0] : angle)}
             min={0}
             max={360}
             step={1}
@@ -190,7 +190,7 @@ export function GradientPicker({ value, onChange }: GradientPickerProps) {
               <div className="flex-1">
                 <Slider
                   value={[stop.offset * 100]}
-                  onValueChange={([offset]) => handleStopOffsetChange(index, offset / 100)}
+                  onValueChange={(offset) => handleStopOffsetChange(index, (Array.isArray(offset) ? offset[0] : offset) / 100)}
                   min={0}
                   max={100}
                   step={1}

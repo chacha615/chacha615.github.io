@@ -107,7 +107,7 @@ export function SettingsDialog({ isOpen, onClose }: Props) {
                     </div>
                     <Slider
                       value={[gridSize]}
-                      onValueChange={([value]) => setGridSize(value)}
+                      onValueChange={(value) => setGridSize(Array.isArray(value) ? value[0] : value)}
                       min={5}
                       max={50}
                       step={5}

@@ -405,7 +405,7 @@ export function LayerPanel() {
             <span className="text-[10px] text-muted-foreground w-12">Opacity</span>
             <Slider
               value={[project?.layers[selectedLayerIds[0]]?.transform.opacity ?? 1]}
-              onValueChange={([opacity]) => updateLayerTransform(selectedLayerIds[0], { opacity })}
+              onValueChange={(opacity) => updateLayerTransform(selectedLayerIds[0], { opacity: Array.isArray(opacity) ? opacity[0] : opacity })}
               min={0}
               max={1}
               step={0.01}

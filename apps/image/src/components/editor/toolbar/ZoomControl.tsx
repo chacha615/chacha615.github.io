@@ -73,8 +73,8 @@ export function ZoomControl() {
     setZoom(Math.min(fillZoom * 0.9, 4));
   };
 
-  const handleSliderChange = (values: number[]) => {
-    const logValue = values[0];
+  const handleSliderChange = (values: number | number[]) => {
+    const logValue = Array.isArray(values) ? values[0] : values;
     const zoom = Math.pow(10, logValue);
     setZoom(zoom);
   };

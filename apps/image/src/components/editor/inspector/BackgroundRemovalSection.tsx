@@ -117,7 +117,7 @@ export function BackgroundRemovalSection({ layer }: Props) {
             </div>
             <Slider
               value={[blurAmount]}
-              onValueChange={([v]) => setBlurAmount(v)}
+              onValueChange={(v) => setBlurAmount(Array.isArray(v) ? v[0] : v)}
               min={5}
               max={30}
               step={1}

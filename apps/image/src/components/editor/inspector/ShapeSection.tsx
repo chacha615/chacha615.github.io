@@ -212,7 +212,7 @@ export function ShapeSection({ layer }: Props) {
                   </div>
                   <Slider
                     value={[(layer.shapeStyle.noise?.density ?? 0.5) * 100]}
-                    onValueChange={([density]) => handleNoiseChange({ density: density / 100 })}
+                    onValueChange={(density) => handleNoiseChange({ density: (Array.isArray(density) ? density[0] : density) / 100 })}
                     min={5}
                     max={100}
                     step={1}
@@ -225,7 +225,7 @@ export function ShapeSection({ layer }: Props) {
                   </div>
                   <Slider
                     value={[layer.shapeStyle.noise?.size ?? 2]}
-                    onValueChange={([size]) => handleNoiseChange({ size })}
+                    onValueChange={(size) => handleNoiseChange({ size: Array.isArray(size) ? size[0] : size })}
                     min={1}
                     max={10}
                     step={1}
@@ -241,7 +241,7 @@ export function ShapeSection({ layer }: Props) {
               </div>
               <Slider
                 value={[layer.shapeStyle.fillOpacity * 100]}
-                onValueChange={([opacity]) => handleStyleChange({ fillOpacity: opacity / 100 })}
+                onValueChange={(opacity) => handleStyleChange({ fillOpacity: (Array.isArray(opacity) ? opacity[0] : opacity) / 100 })}
                 min={0}
                 max={100}
                 step={1}
@@ -306,7 +306,7 @@ export function ShapeSection({ layer }: Props) {
                   </div>
                   <Slider
                     value={[layer.shapeStyle.strokeWidth]}
-                    onValueChange={([width]) => handleStyleChange({ strokeWidth: width })}
+                    onValueChange={(width) => handleStyleChange({ strokeWidth: Array.isArray(width) ? width[0] : width })}
                     min={1}
                     max={20}
                     step={1}
@@ -320,7 +320,7 @@ export function ShapeSection({ layer }: Props) {
                   </div>
                   <Slider
                     value={[layer.shapeStyle.strokeOpacity * 100]}
-                    onValueChange={([opacity]) => handleStyleChange({ strokeOpacity: opacity / 100 })}
+                    onValueChange={(opacity) => handleStyleChange({ strokeOpacity: (Array.isArray(opacity) ? opacity[0] : opacity) / 100 })}
                     min={0}
                     max={100}
                     step={1}
@@ -392,7 +392,7 @@ export function ShapeSection({ layer }: Props) {
               </div>
               <Slider
                 value={[layer.shapeStyle.cornerRadius]}
-                onValueChange={([radius]) => handleStyleChange({ cornerRadius: radius })}
+                onValueChange={(radius) => handleStyleChange({ cornerRadius: Array.isArray(radius) ? radius[0] : radius })}
                 min={0}
                 max={100}
                 step={1}
@@ -407,9 +407,9 @@ export function ShapeSection({ layer }: Props) {
                 </div>
                 <Slider
                   value={[layer.shapeStyle.corners?.topLeft ?? 0]}
-                  onValueChange={([radius]) =>
+                  onValueChange={(radius) =>
                     handleStyleChange({
-                      corners: { ...(layer.shapeStyle.corners ?? { topLeft: 0, topRight: 0, bottomRight: 0, bottomLeft: 0 }), topLeft: radius },
+                      corners: { ...(layer.shapeStyle.corners ?? { topLeft: 0, topRight: 0, bottomRight: 0, bottomLeft: 0 }), topLeft: Array.isArray(radius) ? radius[0] : radius },
                     })
                   }
                   min={0}
@@ -424,9 +424,9 @@ export function ShapeSection({ layer }: Props) {
                 </div>
                 <Slider
                   value={[layer.shapeStyle.corners?.topRight ?? 0]}
-                  onValueChange={([radius]) =>
+                  onValueChange={(radius) =>
                     handleStyleChange({
-                      corners: { ...(layer.shapeStyle.corners ?? { topLeft: 0, topRight: 0, bottomRight: 0, bottomLeft: 0 }), topRight: radius },
+                      corners: { ...(layer.shapeStyle.corners ?? { topLeft: 0, topRight: 0, bottomRight: 0, bottomLeft: 0 }), topRight: Array.isArray(radius) ? radius[0] : radius },
                     })
                   }
                   min={0}
@@ -441,9 +441,9 @@ export function ShapeSection({ layer }: Props) {
                 </div>
                 <Slider
                   value={[layer.shapeStyle.corners?.bottomLeft ?? 0]}
-                  onValueChange={([radius]) =>
+                  onValueChange={(radius) =>
                     handleStyleChange({
-                      corners: { ...(layer.shapeStyle.corners ?? { topLeft: 0, topRight: 0, bottomRight: 0, bottomLeft: 0 }), bottomLeft: radius },
+                      corners: { ...(layer.shapeStyle.corners ?? { topLeft: 0, topRight: 0, bottomRight: 0, bottomLeft: 0 }), bottomLeft: Array.isArray(radius) ? radius[0] : radius },
                     })
                   }
                   min={0}
@@ -458,9 +458,9 @@ export function ShapeSection({ layer }: Props) {
                 </div>
                 <Slider
                   value={[layer.shapeStyle.corners?.bottomRight ?? 0]}
-                  onValueChange={([radius]) =>
+                  onValueChange={(radius) =>
                     handleStyleChange({
-                      corners: { ...(layer.shapeStyle.corners ?? { topLeft: 0, topRight: 0, bottomRight: 0, bottomLeft: 0 }), bottomRight: radius },
+                      corners: { ...(layer.shapeStyle.corners ?? { topLeft: 0, topRight: 0, bottomRight: 0, bottomLeft: 0 }), bottomRight: Array.isArray(radius) ? radius[0] : radius },
                     })
                   }
                   min={0}
@@ -481,7 +481,7 @@ export function ShapeSection({ layer }: Props) {
           </div>
           <Slider
             value={[layer.sides ?? 6]}
-            onValueChange={([sides]) => updateLayer<ShapeLayer>(layer.id, { sides })}
+            onValueChange={(sides) => updateLayer<ShapeLayer>(layer.id, { sides: Array.isArray(sides) ? sides[0] : sides })}
             min={3}
             max={12}
             step={1}
@@ -498,7 +498,7 @@ export function ShapeSection({ layer }: Props) {
             </div>
             <Slider
               value={[layer.sides ?? 5]}
-              onValueChange={([sides]) => updateLayer<ShapeLayer>(layer.id, { sides })}
+              onValueChange={(sides) => updateLayer<ShapeLayer>(layer.id, { sides: Array.isArray(sides) ? sides[0] : sides })}
               min={3}
               max={20}
               step={1}
@@ -511,7 +511,7 @@ export function ShapeSection({ layer }: Props) {
             </div>
             <Slider
               value={[Math.round((layer.innerRadius ?? 0.4) * 100)]}
-              onValueChange={([ratio]) => updateLayer<ShapeLayer>(layer.id, { innerRadius: ratio / 100 })}
+              onValueChange={(ratio) => updateLayer<ShapeLayer>(layer.id, { innerRadius: (Array.isArray(ratio) ? ratio[0] : ratio) / 100 })}
               min={10}
               max={90}
               step={1}

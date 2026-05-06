@@ -316,7 +316,7 @@ const MediaThumbnail: React.FC<{
         )}
 
         {isSelected && (
-          <div className="w-2 h-2 bg-primary rounded-full shadow-[0_0_8px_#22c55e] flex-shrink-0" />
+          <div className="w-2 h-2 bg-primary rounded-full shadow-[0_0_8px_#3b82f6] flex-shrink-0" />
         )}
       </div>
         </ContextMenuTrigger>
@@ -443,7 +443,7 @@ const MediaThumbnail: React.FC<{
 
         {/* Selection indicator */}
         {isSelected && (
-          <div className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full shadow-[0_0_8px_#22c55e]" />
+          <div className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full shadow-[0_0_8px_#3b82f6]" />
         )}
       </div>
 
@@ -925,7 +925,7 @@ export const AssetsPanel: React.FC = () => {
         >
           Media
           {activeTab === "media" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-t-full shadow-[0_-2px_8px_rgba(34,197,94,0.5)]" />
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-t-full shadow-[0_-2px_8px_rgba(59,130,246,0.5)]" />
           )}
         </button>
         <button
@@ -938,7 +938,7 @@ export const AssetsPanel: React.FC = () => {
         >
           Text
           {activeTab === "text" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-t-full shadow-[0_-2px_8px_rgba(34,197,94,0.5)]" />
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-t-full shadow-[0_-2px_8px_rgba(59,130,246,0.5)]" />
           )}
         </button>
         <button
@@ -951,7 +951,7 @@ export const AssetsPanel: React.FC = () => {
         >
           Graphics
           {activeTab === "graphics" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-t-full shadow-[0_-2px_8px_rgba(34,197,94,0.5)]" />
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-t-full shadow-[0_-2px_8px_rgba(59,130,246,0.5)]" />
           )}
         </button>
         <button
@@ -964,7 +964,7 @@ export const AssetsPanel: React.FC = () => {
         >
           AI Gen
           {activeTab === "ai" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-t-full shadow-[0_-2px_8px_rgba(34,197,94,0.5)]" />
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-t-full shadow-[0_-2px_8px_rgba(59,130,246,0.5)]" />
           )}
         </button>
       </div>

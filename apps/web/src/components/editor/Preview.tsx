@@ -5048,7 +5048,7 @@ export const Preview: React.FC = () => {
           onClick={handleScrubClick}
         >
           <div
-            className="h-full bg-primary relative pointer-events-none shadow-[0_0_10px_rgba(34,197,94,0.5)]"
+            className="h-full bg-primary relative pointer-events-none shadow-[0_0_10px_rgba(59,130,246,0.5)]"
             style={{ width: `${progressPercentage}%` }}
           >
             <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity transform scale-0 group-hover:scale-100 duration-100 border border-black/20" />
@@ -5066,7 +5066,7 @@ export const Preview: React.FC = () => {
             <span
               className={`text-[10px] px-1.5 py-0.5 rounded ${
                 rendererType === "webgpu"
-                  ? "bg-green-500/20 text-green-400"
+                  ? "bg-blue-500/20 text-blue-400"
                   : "bg-gray-500/20 text-gray-400"
               }`}
               title={`Rendering with ${rendererType.toUpperCase()}`}
@@ -5086,7 +5086,7 @@ export const Preview: React.FC = () => {
             onClick={() => {
               togglePlayback();
             }}
-            className="w-10 h-10 rounded-full bg-primary hover:bg-primary-hover active:bg-primary-active flex items-center justify-center text-white transition-all shadow-[0_0_15px_rgba(34,197,94,0.4)] hover:shadow-[0_0_25px_rgba(34,197,94,0.6)] transform hover:scale-105"
+            className="w-10 h-10 rounded-full bg-primary hover:bg-primary-hover active:bg-primary-active flex items-center justify-center text-white transition-all shadow-[0_0_15px_rgba(59,130,246,0.4)] hover:shadow-[0_0_25px_rgba(59,130,246,0.6)] transform hover:scale-105"
           >
             {isPlaying ? (
               <Pause size={18} fill="currentColor" />

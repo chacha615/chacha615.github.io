@@ -39,7 +39,7 @@ export const Playhead: React.FC<PlayheadProps> = ({
         </svg>
       </div>
       <div
-        className="absolute w-px bg-primary shadow-[0_0_10px_#22c55e]"
+        className="absolute w-px bg-primary shadow-[0_0_10px_#3b82f6]"
         style={{ top: '13px', bottom: 0, left: 0 }}
       />
     </div>
